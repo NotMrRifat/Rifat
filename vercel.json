@@ -1,14 +1,14 @@
 {
   "redirects": [
     {
-      "source": "/(.*)",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
-          "value": "rifathassan.vercel.app/"
+          "value": "rifathassan.vercel.app"
         }
       ],
-      "destination": "https://omarfaruk.eu.cc/$1",
+      "destination": "https://omarfaruk.eu.cc/:path*",
       "permanent": true
     }
   ]

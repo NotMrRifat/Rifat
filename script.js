@@ -652,7 +652,7 @@
     const obs = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) {
         setTimeout(() => {
-          countUp('c1', 8, '+');
+          countUp('c1', 15, '+');
           countUp('c2', 28, '+');
           countUp('c3', 5, '+');
           countUp('c4', 5, '', true);
