@@ -6,8 +6,8 @@
 <title>Business Ventures &amp; Agencies · Rifat Hassan</title>
 <meta name="description" content="Business profiles for Elite ProGen, RS Software Solutions, StyMetics Shop, CyberVision Media, StyTronics, EdTech Apps, and Non Tech Rifat."/>
 <meta name="robots" content="index, follow"/>
-<link rel="canonical" href="https://omarfaruk.eu.cc/business.html"/>
-<link rel="icon" type="image/jpeg" href="ico.png"/>
+<link rel="canonical" href="https://notmrrifat.dev/business.html"/>
+
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
@@ -30,20 +30,34 @@
 <canvas id="bg-canvas"></canvas>
 <canvas id="ptcl"></canvas>
 
-<!-- Mobile Menu -->
-<div class="mmenu" id="mm">
-  <a href="index.html" onclick="cMM()">Home</a>
-  <a href="index.html#about" onclick="cMM()">About</a>
-  <a href="index.html#skills" onclick="cMM()">Skills</a>
-  <a href="index.html#tools" onclick="cMM()">Free Tools</a>
-  <a href="projects.html" onclick="cMM()">Projects</a>
-  <a href="bots.html" onclick="cMM()">Bots</a>
-  <a href="business.html" onclick="cMM()">Business</a>
-  <a href="index.html#contact" onclick="cMM()">Contact</a>
-</div>
+<!-- Mobile Sidebar Backdrop Overlay -->
+<div class="mmenu-overlay" id="mm-overlay" onclick="cMM()"></div>
+
+<!-- Mobile Sidebar Drawer with explicit "X" Close Button -->
+<aside class="mmenu" id="mm" aria-label="Mobile Navigation Sidebar">
+  <div class="mmenu-header">
+    <div class="mmenu-title">NAVIGATION</div>
+    <button class="mmenu-close" onclick="cMM()" aria-label="Close Mobile Menu">
+      <svg class="icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav class="mmenu-links">
+    <a href="index.html" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Home</a>
+    <a href="index.html#about" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> About</a>
+    <a href="index.html#skills" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Skills</a>
+    <a href="index.html#tools" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Free Tools</a>
+    <a href="projects.html" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Projects</a>
+    <a href="bots.html" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Bots</a>
+    <a href="business.html" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg> Business</a>
+    <a href="index.html#contact" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Contact</a>
+  </nav>
+</aside>
 
 <nav id="nb" role="navigation">
-  <a href="index.html" class="nlogo">RIFAT</a>
+  <a href="index.html" class="nlogo">
+    <svg class="icon-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+    RIFAT
+  </a>
   <ul class="nlinks">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#about">About</a></li>
@@ -55,21 +69,56 @@
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
   <div class="nbtns"><a href="cv.html" class="ncv">Resume</a></div>
+  <!-- 3-Line Mobile Button -->
   <div class="ham" id="hm" onclick="tMM()"><span></span><span></span><span></span></div>
 </nav>
 
 <section id="main" style="padding-top:130px">
   <div class="ctr">
     <div style="text-align:center;margin-bottom:60px">
-      <div class="stag" style="margin:0 auto 12px">Entrepreneurial Portfolio</div>
+      <div class="stag" style="margin:0 auto 12px">
+        <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+        Entrepreneurial Portfolio
+      </div>
       <h1 class="stitle" style="text-align:center">MY <span>VENTURES</span></h1>
       <p style="text-align:center;color:var(--txtd);font-family:var(--fmono);font-size:13px">// Transforming ideas into software companies and digital brands</p>
     </div>
 
+    <!-- Business Cards Grid with EQUAL Card Sizing for All (including Elite ProGen) -->
     <div class="biz-grid">
-      <!-- 1. RS Software Solutions -->
+
+      <!-- 1. Elite ProGen (Flagship - Equal Sized Card) -->
+      <div class="biz-card elite-card glass-card" data-expandable>
+        <div class="elite-badge">⭐ Flagship Agency</div>
+        <div class="blog">
+          <svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="biz-category">AI Automation Agency</div>
+        <h2 class="biz-title">Elite ProGen</h2>
+        <p class="p-text">Rifat Hassan's primary agency providing custom AI solutions, high-converting web experiences, automated Telegram bots, and n8n workflows.</p>
+        <div class="biz-stats">
+          <div class="stat-item"><span class="stat-val">AI</span><span class="stat-lbl">Powered</span></div>
+          <div class="stat-item"><span class="stat-val">Full-Stack</span><span class="stat-lbl">Dev</span></div>
+          <div class="stat-item"><span class="stat-val">2026</span><span class="stat-lbl">Agency</span></div>
+        </div>
+        <div class="biz-detail">
+          <div class="stag" style="margin-bottom:6px">Mission &amp; Services</div>
+          <p style="font-size:13px;color:var(--txtd);margin-bottom:12px">Engineering high-performance software and AI systems that automate tasks and improve digital conversion.</p>
+          <div class="biz-services">
+            <span class="biz-service-tag">3D Web Applications</span>
+            <span class="biz-service-tag">Telegram AI Bots</span>
+            <span class="biz-service-tag">n8n Automation</span>
+          </div>
+          <a href="mailto:md.rifat@myself.com?subject=Elite ProGen Project Inquiry" class="btnP" style="margin-top:10px">Work With Elite ProGen →</a>
+        </div>
+      </div>
+
+      <!-- 2. RS Software Solutions -->
       <div class="biz-card glass-card" data-expandable>
         <span class="bot-status active">Active Agency</span>
+        <div class="blog">
+          <svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
         <div class="biz-category">Tech &amp; Software Dev</div>
         <h2 class="biz-title">RS Software Solutions</h2>
         <p class="p-text">Providing custom web and mobile application engineering services, specializing in React and Firebase platforms.</p>
@@ -79,45 +128,43 @@
           <div class="stat-item"><span class="stat-val">99%</span><span class="stat-lbl">Success</span></div>
         </div>
         <div class="biz-detail">
-          <div class="stag" style="margin-bottom:6px">Overview &amp; Mission</div>
-          <p style="font-size:13px;color:var(--txtd);margin-bottom:12px">RS Software Solutions delivers custom web applications, Firebase backend integrations, and responsive React interfaces for business clients.</p>
-          <div class="stag" style="margin-bottom:6px">Services</div>
+          <div class="stag" style="margin-bottom:6px">Overview &amp; Services</div>
+          <p style="font-size:13px;color:var(--txtd);margin-bottom:12px">Delivering custom web applications, Firebase backend integrations, and responsive React interfaces.</p>
           <div class="biz-services">
-            <span class="biz-service-tag">Web Application Dev</span>
+            <span class="biz-service-tag">Web Dev</span>
             <span class="biz-service-tag">React &amp; Vite</span>
-            <span class="biz-service-tag">Firebase Backend</span>
-            <span class="biz-service-tag">UI/UX Engineering</span>
+            <span class="biz-service-tag">Firebase</span>
           </div>
           <a href="mailto:md.rifat@myself.com?subject=RS Software Inquiry" class="btnG" style="margin-top:10px">Work With RS Software →</a>
         </div>
       </div>
 
-      <!-- 2. CyberVision Media -->
+      <!-- 3. CyberVision Media -->
       <div class="biz-card glass-card" data-expandable>
         <span class="bot-status soon">Growing Brand</span>
+        <div class="blog">
+          <svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        </div>
         <div class="biz-category">Media Production</div>
         <h2 class="biz-title">CyberVision Media</h2>
-        <p class="p-text">Producing educational content, AI tool breakdown guides, and programming tutorials.</p>
+        <p class="p-text">Producing educational content, AI tool breakdown guides, and programming tutorials for developers.</p>
         <div class="biz-stats">
           <div class="stat-item"><span class="stat-val">5K+</span><span class="stat-lbl">Followers</span></div>
           <div class="stat-item"><span class="stat-val">100k+</span><span class="stat-lbl">Views</span></div>
           <div class="stat-item"><span class="stat-val">Tech</span><span class="stat-lbl">Ed</span></div>
         </div>
         <div class="biz-detail">
-          <div class="stag" style="margin-bottom:6px">Overview</div>
           <p style="font-size:13px;color:var(--txtd);margin-bottom:12px">Focuses on technical knowledge sharing, AI workflow demonstrations, and developer career tips.</p>
-          <div class="biz-services">
-            <span class="biz-service-tag">Web Dev Guides</span>
-            <span class="biz-service-tag">AI Workflows</span>
-            <span class="biz-service-tag">Tutorials</span>
-          </div>
           <a href="#" class="btnS" style="margin-top:10px">View Content Channel →</a>
         </div>
       </div>
 
-      <!-- 3. StyMetics Shop -->
+      <!-- 4. StyMetics Shop -->
       <div class="biz-card glass-card" data-expandable>
         <span class="bot-status active">Active Brand</span>
+        <div class="blog">
+          <svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 1 2 2h14a2 2 0 0 1 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
         <div class="biz-category">E-Commerce</div>
         <h2 class="biz-title">StyMetics Shop</h2>
         <p class="p-text">Futuristic fashion retail platform with custom variant management, wishlist tracking, and admin order control.</p>
@@ -127,14 +174,17 @@
           <div class="stat-item"><span class="stat-val">4.8</span><span class="stat-lbl">Rating</span></div>
         </div>
         <div class="biz-detail">
-          <p style="font-size:13px;color:var(--txtd);margin-bottom:12px">Modern e-commerce platform built with React, Vite, and Firebase for streamlined online shopping.</p>
+          <p style="font-size:13px;color:var(--txtd);margin-bottom:12px">Modern e-commerce storefront built with React, Vite, and Firebase.</p>
           <a href="#" class="btnS" style="margin-top:10px">Visit Storefront →</a>
         </div>
       </div>
 
-      <!-- 4. StyTronics -->
+      <!-- 5. StyTronics -->
       <div class="biz-card glass-card" data-expandable>
         <span class="bot-status soon">Venture</span>
+        <div class="blog">
+          <svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
         <div class="biz-category">Electronics &amp; Gadgets</div>
         <h2 class="biz-title">StyTronics</h2>
         <p class="p-text">Specialized electronics retail and component management venture targeting tech enthusiasts in Bangladesh.</p>
@@ -149,9 +199,12 @@
         </div>
       </div>
 
-      <!-- 5. EdTech Apps -->
+      <!-- 6. EdTech Apps -->
       <div class="biz-card glass-card" data-expandable>
         <span class="bot-status active">App Suite</span>
+        <div class="blog">
+          <svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
         <div class="biz-category">Productivity Tools</div>
         <h2 class="biz-title">EdTech Apps</h2>
         <p class="p-text">Studious AI Study Tracker, FocusSphere Research Hub, OMR Exam Evaluation Portal, and Utility Billing App.</p>
@@ -161,56 +214,8 @@
           <div class="stat-item"><span class="stat-val">Free</span><span class="stat-lbl">Access</span></div>
         </div>
         <div class="biz-detail">
-          <p style="font-size:13px;color:var(--txtd);margin-bottom:12px">Educational and student productivity tools engineered to improve focus and learning efficiency.</p>
+          <p style="font-size:13px;color:var(--txtd);margin-bottom:12px">Educational and student productivity tools engineered to improve focus.</p>
           <a href="projects.html" class="btnG" style="margin-top:10px">View EdTech Apps →</a>
-        </div>
-      </div>
-
-      <!-- 6. Elite ProGen (Featured Flagship) -->
-      <div class="biz-card elite-card glass-card" data-expandable style="grid-column:1/-1">
-        <div class="elite-badge">⭐ Flagship Agency</div>
-        <div class="biz-category">Digital Products &amp; AI Automation Agency</div>
-        <h2 class="biz-title">Elite ProGen</h2>
-        <p class="p-text">Rifat Hassan's primary agency providing custom AI solutions, high-converting web experiences, automated Telegram bots, and n8n workflows.</p>
-
-        <div class="biz-stats">
-          <div class="stat-item"><span class="stat-val">AI</span><span class="stat-lbl">Powered</span></div>
-          <div class="stat-item"><span class="stat-val">Full-Stack</span><span class="stat-lbl">Dev</span></div>
-          <div class="stat-item"><span class="stat-val">2026</span><span class="stat-lbl">Agency</span></div>
-        </div>
-
-        <div class="biz-detail">
-          <div class="stag" style="margin-bottom:8px">Mission &amp; Vision</div>
-          <p style="font-size:13px;color:var(--txtd);margin-bottom:16px">To engineer high-performance software and AI systems that automate tasks, improve conversion, and elevate digital presence for clients worldwide.</p>
-
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:16px">
-            <div>
-              <div class="stag" style="margin-bottom:6px">Core Services</div>
-              <div class="biz-services">
-                <span class="biz-service-tag">Awwwards-Level 3D Web Apps</span>
-                <span class="biz-service-tag">Telegram &amp; Website AI Bots</span>
-                <span class="biz-service-tag">n8n Workflow Automation</span>
-                <span class="biz-service-tag">Custom Software Development</span>
-                <span class="biz-service-tag">Prompt Engineering</span>
-              </div>
-            </div>
-
-            <div>
-              <div class="stag" style="margin-bottom:6px">Tech Stack</div>
-              <div class="biz-services">
-                <span class="biz-service-tag">Three.js</span>
-                <span class="biz-service-tag">GSAP</span>
-                <span class="biz-service-tag">React</span>
-                <span class="biz-service-tag">Python</span>
-                <span class="biz-service-tag">OpenAI GPT-4</span>
-                <span class="biz-service-tag">n8n</span>
-              </div>
-            </div>
-          </div>
-
-          <a href="mailto:md.rifat@myself.com?subject=Elite ProGen Project Inquiry" class="btnP" style="margin-top:10px">
-            Start a Project with Elite ProGen →
-          </a>
         </div>
       </div>
     </div>
@@ -218,7 +223,9 @@
     <!-- Non Tech Rifat Section -->
     <div id="non-tech" style="margin-top:50px">
       <div class="brand-header">
-        <div class="brand-logo">🎬</div>
+        <div class="brand-logo">
+          <svg class="icon-svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        </div>
         <div>
           <h2 class="brand-name">Non Tech Rifat</h2>
           <div class="brand-tag">Technology Education for Everyone</div>
@@ -229,8 +236,14 @@
       </p>
 
       <div class="brand-social">
-        <a href="https://www.facebook.com/NonTechRifat" target="_blank" rel="noopener" class="brand-btn fb">Facebook Page</a>
-        <a href="https://www.youtube.com/@NonTechRifat" target="_blank" rel="noopener" class="brand-btn yt">YouTube Channel</a>
+        <a href="https://www.facebook.com/NonTechRifat" target="_blank" rel="noopener" class="brand-btn fb">
+          <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook Page
+        </a>
+        <a href="https://www.youtube.com/@NonTechRifat" target="_blank" rel="noopener" class="brand-btn yt">
+          <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          YouTube Channel
+        </a>
       </div>
     </div>
   </div>
@@ -241,7 +254,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="nlogo">RIFAT</a>
-        <p>Dedicated to accelerating business growth and building smart digital solutions through web development, custom Telegram bots, and AI automation. Let's build the next groundbreaking digital product together.</p>
+        <p>Full Stack Web Developer &amp; AI Automation Engineer based in Tongi, Gazipur, Bangladesh.</p>
       </div>
       <div class="footer-col">
         <h4>Navigation</h4>

@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "rifathassan.vercel.app/"
+        }
+      ],
+      "destination": "https://omarfaruk.eu.cc/$1",
+      "permanent": true
+    }
+  ]
+}

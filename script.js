@@ -1,6 +1,6 @@
 /* ============================================================
-   RIFAT HASSAN PORTFOLIO — MAIN ENGINE v4.0 (FULL CONTENT EDITION)
-   Three.js + GSAP + Lenis + Data-Driven UI + Complete Features
+   RIFAT HASSAN PORTFOLIO — MAIN ENGINE v4.2
+   Mobile Sidebar + Lenis Smooth Scroll to Section + Data Engine
    ============================================================ */
 
 (function () {
@@ -54,7 +54,7 @@
     let progress = 0;
     let msgIdx = 0;
     const interval = setInterval(() => {
-      progress += Math.random() * 22 + 10;
+      progress += Math.random() * 25 + 10;
       if (progress > 100) progress = 100;
 
       if (bar) bar.style.width = progress + '%';
@@ -196,7 +196,6 @@
         scene.userData.wireObjects = wireObjects;
       }
 
-      /* Animation Loop */
       let frameId;
       const clock = new THREE.Clock();
 
@@ -317,7 +316,7 @@
   }
 
   /* ─────────────────────────────────────────────────────── */
-  /* ── LENIS SMOOTH SCROLL (DOUBLE-RAF FIX) ──────────────── */
+  /* ── LENIS SMOOTH SCROLL ENGINE & ANCHOR SMOOTH SCROLL ─── */
   /* ─────────────────────────────────────────────────────── */
   function initLenis() {
     if (prefersReducedMotion || typeof Lenis === 'undefined') return;
@@ -342,6 +341,31 @@
         }
         requestAnimationFrame(singleRaf);
       }
+
+      /* ── Anchor Smooth Scroll on Nav Button Click (Desktop/PC) ── */
+      document.querySelectorAll('a[href^="#"], a[href*="index.html#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+          const href = anchor.getAttribute('href');
+          const hashIndex = href.indexOf('#');
+          if (hashIndex === -1) return;
+
+          const targetId = href.substring(hashIndex);
+          if (targetId === '#' || targetId === '') return;
+
+          const targetEl = document.querySelector(targetId);
+          if (targetEl) {
+            e.preventDefault();
+            window.cMM(); // Close mobile menu if open
+
+            if (lenis) {
+              lenis.scrollTo(targetEl, { offset: -70, duration: 1.2 });
+            } else {
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        });
+      });
+
     } catch (e) {
       console.warn('Lenis scroll setup note:', e);
     }
@@ -366,7 +390,7 @@
   }
 
   /* ─────────────────────────────────────────────────────── */
-  /* ── DYNAMIC DATA RENDERERS (RELIABLE & RICH) ──────────── */
+  /* ── DYNAMIC DATA RENDERERS ────────────────────────────── */
   /* ─────────────────────────────────────────────────────── */
 
   /* 1. Render Skills Arsenal with Filters */
@@ -376,7 +400,6 @@
 
     const filtered = PORTFOLIO_DATA.skills.filter(s => filterKey === 'all' || s.cat === filterKey);
 
-    // Group by Category for rich card presentation
     const categories = {
       code: { name: 'Programming & Core Frameworks', items: [] },
       web: { name: '3D Graphics & Creative Dev', items: [] },
@@ -416,7 +439,6 @@
 
     container.innerHTML = html;
 
-    // Trigger skill bar width animation
     setTimeout(() => {
       document.querySelectorAll('.sbar').forEach(b => { b.style.width = b.dataset.w + '%'; });
     }, 100);
@@ -575,7 +597,7 @@
   }
 
   /* ─────────────────────────────────────────────────────── */
-  /* ── NAVBAR & MOBILE MENU ─────────────────────────────── */
+  /* ── NAVBAR & MOBILE SIDEBAR DRAWER ─────────────────────── */
   /* ─────────────────────────────────────────────────────── */
   function initNav() {
     const nb = document.getElementById('nb');
@@ -593,13 +615,20 @@
     }, { passive: true });
   }
 
+  /* Toggle Mobile Drawer & Backdrop Overlay */
   window.tMM = function () {
-    document.getElementById('mm')?.classList.toggle('op');
-    document.getElementById('hm')?.classList.toggle('op');
+    const mm = document.getElementById('mm');
+    const overlay = document.getElementById('mm-overlay');
+    mm?.classList.toggle('open');
+    overlay?.classList.toggle('open');
   };
+
+  /* Close Mobile Drawer */
   window.cMM = function () {
-    document.getElementById('mm')?.classList.remove('op');
-    document.getElementById('hm')?.classList.remove('op');
+    const mm = document.getElementById('mm');
+    const overlay = document.getElementById('mm-overlay');
+    mm?.classList.remove('open');
+    overlay?.classList.remove('open');
   };
 
   /* ─────────────────────────────────────────────────────── */
@@ -673,7 +702,6 @@
   /* ── FILTER & SEARCH ATTACHMENTS ───────────────────────── */
   /* ─────────────────────────────────────────────────────── */
   function initFilterEvents() {
-    // Skills Filter Buttons
     const sfBtns = document.querySelectorAll('.sf-btn');
     sfBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -683,7 +711,6 @@
       });
     });
 
-    // Tools Filter
     const toolBtns = document.querySelectorAll('[data-tool-filter]');
     const toolSearch = document.getElementById('tool-search');
     toolBtns.forEach(btn => {
@@ -700,7 +727,6 @@
       });
     }
 
-    // Projects Filter
     const projBtns = document.querySelectorAll('[data-proj-filter]');
     const projSearch = document.getElementById('proj-search');
     projBtns.forEach(btn => {
@@ -717,7 +743,6 @@
       });
     }
 
-    // Bots Filter
     const botBtns = document.querySelectorAll('[data-bot-filter]');
     const botSearch = document.getElementById('bot-search');
     botBtns.forEach(btn => {
@@ -809,7 +834,6 @@
     initCardGlow();
     initCardTilt();
     
-    // Initial Render of All Data Sections
     renderSkills();
     renderTools();
     renderProjects();
