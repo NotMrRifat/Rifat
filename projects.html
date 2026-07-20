@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Projects &amp; Free AI Developer Tools · Rifat Hassan</title>
+<meta name="description" content="Full Stack Web Applications, Open-Source Tools, Free AI Utilities, and Three.js Projects created by Rifat Hassan."/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://omarfaruk.eu.cc/projects.html"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/jpeg" href="ico.png"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- Ambient Layering -->
+<div class="aurora-bg">
+  <div class="aurora-blob aurora-blob-1"></div>
+  <div class="aurora-blob aurora-blob-2"></div>
+</div>
+<div class="digital-grid"></div>
+
+<!-- Page Transition Overlay -->
+<div class="page-transition"></div>
+
+<div id="cur"></div><div id="curR"></div>
+<canvas id="bg-canvas"></canvas>
+<canvas id="ptcl"></canvas>
+
+<!-- Mobile Menu -->
+<div class="mmenu" id="mm">
+  <a href="index.html" onclick="cMM()">Home</a>
+  <a href="index.html#about" onclick="cMM()">About</a>
+  <a href="index.html#skills" onclick="cMM()">Skills</a>
+  <a href="index.html#tools" onclick="cMM()">Free Tools</a>
+  <a href="projects.html" onclick="cMM()">Projects</a>
+  <a href="bots.html" onclick="cMM()">Bots</a>
+  <a href="business.html" onclick="cMM()">Business</a>
+  <a href="index.html#contact" onclick="cMM()">Contact</a>
+</div>
+
+<nav id="nb" role="navigation">
+  <a href="index.html" class="nlogo">RIFAT</a>
+  <ul class="nlinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#skills">Skills</a></li>
+    <li><a href="index.html#tools">Tools</a></li>
+    <li><a href="projects.html" class="act">Projects</a></li>
+    <li><a href="bots.html">Bots</a></li>
+    <li><a href="business.html" class="hl">Business</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <div class="nbtns"><a href="cv.html" class="ncv">Resume</a></div>
+  <div class="ham" id="hm" onclick="tMM()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- 1. FREE AI & DEVELOPER TOOLS SECTION -->
+<section id="tools" class="tools-section" style="padding-top:130px">
+  <div class="ctr">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px">
+      <div>
+        <div class="stag">Public Utilities Hub</div>
+        <h2 class="stitle" style="margin-bottom:0">FREE AI &amp; <span>DEVELOPER TOOLS</span></h2>
+        <p style="color:var(--txtd);font-size:13px;margin-top:6px;font-family:var(--fmono)">// Instant-access web utilities, AI tools, and Telegram bots</p>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <input type="text" id="tool-search" class="finp" placeholder="Search tools..." style="width:200px;padding:8px 14px;font-size:12px"/>
+        <div class="filter-row">
+          <button class="flt-btn active" data-tool-filter="all">All Tools</button>
+          <button class="flt-btn" data-tool-filter="ai">AI Tools</button>
+          <button class="flt-btn" data-tool-filter="devtools">Developer</button>
+          <button class="flt-btn" data-tool-filter="productivity">Productivity</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data-Driven Free Tools Grid -->
+    <div class="tools-grid" id="tools-container"></div>
+  </div>
+  <div class="hline" style="margin-top:60px"></div>
+</section>
+
+<!-- 2. PROJECTS LAB SECTION -->
+<section id="main" style="padding-top:60px">
+  <div class="ctr">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px">
+      <div>
+        <div class="stag">Software Laboratory</div>
+        <h1 class="stitle" style="margin-bottom:0">FEATURED <span>PROJECTS</span></h1>
+        <p style="color:var(--txtd);font-family:var(--fmono);font-size:13px">// Full-stack web applications, tools, and platforms</p>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <input type="text" id="proj-search" class="finp" placeholder="Search projects..." style="width:200px;padding:8px 14px;font-size:12px"/>
+        <div class="filter-row">
+          <button class="flt-btn active" data-proj-filter="all">All Projects</button>
+          <button class="flt-btn" data-proj-filter="ai">AI &amp; ML</button>
+          <button class="flt-btn" data-proj-filter="web">Web Apps</button>
+          <button class="flt-btn" data-proj-filter="ecommerce">E-Commerce</button>
+          <button class="flt-btn" data-proj-filter="tools">Tools</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data-Driven Projects Container -->
+    <div class="projects-grid" id="projects-container"></div>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <div class="ctr">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nlogo">RIFAT</a>
+        <p>Dedicated to accelerating business growth and building smart digital solutions through web development, custom Telegram bots, and AI automation. Let's build the next groundbreaking digital product together.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#skills">Skills</a></li>
+          <li><a href="index.html#tools">Free Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="bots.html">Bots &amp; AI</a></li>
+          <li><a href="business.html">Business</a></li>
+          <li><a href="cv.html">Resume</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="https://github.com/NotMrRifat" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/NotMrRifat" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.facebook.com/NotMrRifat" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://www.instagram.com/NotMrRifat" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="fcopy">&copy; 2026 <span>Rifat Hassan</span> &nbsp;·&nbsp; Tongi, Gazipur, Bangladesh</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+
+<script src="portfolio-data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
