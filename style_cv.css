@@ -250,3 +250,39 @@ h3 { margin-top: 0; }
 .edu-box{
     margin-bottom:6px;
 }
+
+/* ── Screen & Mobile Responsive Layout Rules ─────────────── */
+@media screen and (max-width: 840px) {
+    body {
+        padding: 10px;
+    }
+    .page {
+        width: 100%;
+        max-width: 100%;
+        min-height: auto;
+        max-height: none;
+        margin: 0 auto;
+        padding: 20px 16px;
+    }
+    .header-main {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+    }
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 4px;
+        margin-top: 8px;
+    }
+    .main-wrapper {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .print-btn {
+        top: 10px;
+        right: 10px;
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+}
