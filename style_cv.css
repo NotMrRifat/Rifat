@@ -223,25 +223,40 @@ body {
     border: 1px solid var(--border);
 }
 
-/* Print Button */
-.print-btn {
+/* Top Action Bar (Print + Back to Portfolio) */
+.cv-top-bar {
     position: fixed;
     top: 20px;
     right: 20px;
-    padding: 12px 25px;
-    background: var(--primary);
-    color: var(--accent-glow);
-    border: 1px solid var(--accent-glow);
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
     z-index: 999;
 }
 
-.print-btn:hover {
+.back-btn, .print-btn {
+    padding: 10px 20px;
+    background: #0f172a;
+    color: var(--accent-glow);
+    border: 1px solid rgba(0, 245, 255, 0.4);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    transition: all 0.25s ease;
+}
+
+.back-btn:hover, .print-btn:hover {
     background: var(--accent);
     color: white;
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
 }
 
 /* Typography fix for 1 page fit */
@@ -279,9 +294,15 @@ h3 { margin-top: 0; }
         grid-template-columns: 1fr;
         gap: 16px;
     }
-    .print-btn {
-        top: 10px;
-        right: 10px;
+    .cv-top-bar {
+        position: static;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .back-btn, .print-btn {
         padding: 8px 14px;
         font-size: 12px;
     }

@@ -1,5 +1,5 @@
 /* ============================================================
-   RIFAT HASSAN PORTFOLIO — MAIN ENGINE v4.2
+   RIFAT HASSAN PORTFOLIO — MAIN ENGINE v4.5
    Mobile Sidebar + Lenis Smooth Scroll to Section + Data Engine
    ============================================================ */
 
@@ -47,7 +47,7 @@
       'Initializing neural network...',
       'Loading 3D engine & shaders...',
       'Injecting cyber glass components...',
-      'Loading skills, projects & bots...',
+      'Loading skills, projects & tools...',
       'Ready for launch...',
     ];
 
@@ -72,9 +72,9 @@
           loader.classList.add('hidden');
           document.body.style.overflow = '';
           triggerHeroAnimation();
-        }, 300);
+        }, 280);
       }
-    }, 40);
+    }, 35);
 
     document.body.style.overflow = 'hidden';
   }
@@ -342,7 +342,7 @@
         requestAnimationFrame(singleRaf);
       }
 
-      /* ── Anchor Smooth Scroll on Nav Button Click (Desktop/PC) ── */
+      /* ── Anchor Smooth Scroll on Nav Button Click ── */
       document.querySelectorAll('a[href^="#"], a[href*="index.html#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
           const href = anchor.getAttribute('href');
@@ -380,7 +380,7 @@
 
     document.querySelectorAll('.stitle').forEach(el => {
       gsap.fromTo(el,
-        { y: 35, opacity: 0 },
+        { y: 30, opacity: 0 },
         {
           y: 0, opacity: 1, duration: 0.85, ease: 'power3.out',
           scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' }
@@ -444,32 +444,59 @@
     }, 100);
   }
 
-  /* 2. Render Free AI & Developer Tools */
+  /* 2. Render Free AI & Developer Tools with Custom-Built Utilities */
   function renderTools(filterKey = 'all', searchQuery = '') {
     const container = document.getElementById('tools-container');
     if (!container || typeof PORTFOLIO_DATA === 'undefined') return;
 
     const query = searchQuery.toLowerCase().trim();
     const filtered = PORTFOLIO_DATA.tools.filter(tool => {
-      const matchCat = filterKey === 'all' || tool.catKey === filterKey;
-      const matchSearch = !query || tool.title.toLowerCase().includes(query) || tool.description.toLowerCase().includes(query);
+      let matchCat = false;
+      if (filterKey === 'all') {
+        matchCat = true;
+      } else if (filterKey === 'custom' || filterKey === 'live') {
+        matchCat = tool.isCustom === true;
+      } else {
+        matchCat = tool.catKey === filterKey;
+      }
+
+      const matchSearch = !query || 
+        tool.title.toLowerCase().includes(query) || 
+        tool.description.toLowerCase().includes(query) ||
+        tool.category.toLowerCase().includes(query);
+
       return matchCat && matchSearch;
     });
 
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--txtd);font-family:var(--fmono)">
+          <div style="font-size:2rem;margin-bottom:12px;color:var(--cyan)">// 404 NO_MATCH</div>
+          <p>No tools found matching your search. Try adjusting filters or search query.</p>
+        </div>
+      `;
+      return;
+    }
+
     container.innerHTML = filtered.map(t => `
-      <div class="tool-card glass-card">
-        <span class="tool-status ${t.status}">${t.statusLabel}</span>
+      <div class="tool-card glass-card ${t.isCustom ? 'custom-tool' : ''}">
+        ${t.isCustom ? 
+          `<div class="tool-badge-custom"><span class="pulse-dot"></span> Built by Rifat</div>` : 
+          `<span class="tool-status ${t.status}">${t.statusLabel}</span>`
+        }
         <div>
-          <div class="pico">${t.icon}</div>
+          <div class="pico ${t.isCustom ? 'pico-custom' : ''}">${t.icon}</div>
           <div class="tool-cat">${t.category}</div>
           <h3 class="ptit">${t.title}</h3>
           <p class="pdesc">${t.description}</p>
         </div>
         <div>
           <div class="pstack">
-            ${t.techStack.map(st => `<span class="stk">${st}</span>`).join('')}
+            ${t.techStack.map(st => `<span class="stk ${t.isCustom ? 'stk-custom' : ''}">${st}</span>`).join('')}
           </div>
-          <a href="${t.openUrl}" class="pb pbl">${t.btnText}</a>
+          <a href="${t.openUrl}" ${t.openUrl.startsWith('http') ? 'target="_blank" rel="noopener"' : ''} class="pb ${t.isCustom ? 'pbl tool-launch-btn' : 'pbl'}">
+            ${t.btnText}
+          </a>
         </div>
       </div>
     `).join('');
@@ -489,6 +516,16 @@
       return matchCat && matchSearch;
     });
 
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--txtd);font-family:var(--fmono)">
+          <div style="font-size:2rem;margin-bottom:12px;color:var(--cyan)">// 404 NO_MATCH</div>
+          <p>No projects found matching the filter.</p>
+        </div>
+      `;
+      return;
+    }
+
     container.innerHTML = filtered.map(p => `
       <div class="pcard glass-card" data-cat="${p.category}">
         <div class="pico">${p.icon}</div>
@@ -501,8 +538,8 @@
         </div>
         <div class="pbtns">
           <a href="${p.liveUrl}" class="pb pbl">▶ Demo</a>
-          <a href="${p.codeUrl}" class="pb pbs">&lt;/&gt; Source</a>
-          <a href="${p.caseStudyUrl}" class="pb pbs">Case Study</a>
+          <a href="${p.codeUrl}" target="_blank" rel="noopener" class="pb pbs">&lt;/&gt; Source</a>
+          ${p.caseStudyUrl !== '#' ? `<a href="${p.caseStudyUrl}" class="pb pbs">Case Study</a>` : ''}
         </div>
       </div>
     `).join('');
@@ -521,6 +558,16 @@
       const matchSearch = !query || b.name.toLowerCase().includes(query) || b.description.toLowerCase().includes(query);
       return matchCat && matchSearch;
     });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--txtd);font-family:var(--fmono)">
+          <div style="font-size:2rem;margin-bottom:12px;color:var(--cyan)">// 404 NO_MATCH</div>
+          <p>No bots found matching the criteria.</p>
+        </div>
+      `;
+      return;
+    }
 
     container.innerHTML = filtered.map(b => `
       <div class="bot-card glass-card" data-bot-cat="${b.catKey}">
@@ -542,7 +589,7 @@
         </div>
         <div class="bot-btns">
           <a href="${b.demoUrl}" class="bot-btn primary">Demo</a>
-          <a href="${b.telegramUrl}" class="bot-btn secondary">Telegram</a>
+          <a href="${b.telegramUrl}" target="_blank" rel="noopener" class="bot-btn secondary">Telegram</a>
         </div>
       </div>
     `).join('');
@@ -558,11 +605,11 @@
     if (!tw) return;
     const phrases = [
       'Full Stack Web Developer',
-      'AI Automation Builder',
-      'Telegram Bot Developer',
-      'Three.js Creative Developer',
-      'n8n Workflow Engineer',
-      'Vibe Coder & Tech Innovator',
+      'AI Automation Engineer',
+      'Telegram Bot Specialist',
+      'Three.js Creative Engineer',
+      'n8n Workflow Architect',
+      'Vibe Coder & System Builder',
     ];
     let pi = 0, ci = 0, del = false;
 
@@ -575,7 +622,7 @@
         tw.textContent = ph.slice(0, --ci);
         if (ci === 0) { del = false; pi = (pi + 1) % phrases.length; }
       }
-      setTimeout(type, del ? 45 : 80);
+      setTimeout(type, del ? 40 : 75);
     }
     type();
   }
@@ -586,14 +633,15 @@
   function triggerHeroAnimation() {
     if (typeof gsap === 'undefined') return;
     const tl = gsap.timeline({ delay: 0.1 });
-    tl.from('.hbadge',  { y: -18, opacity: 0, duration: 0.6, ease: 'power3.out' })
-      .from('.hname',   { y: 35,  opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.3')
-      .from('.hsub',    { y: 18,  opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.5')
-      .from('.hdesc',   { y: 18,  opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
-      .from('.hctas',   { y: 18,  opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
-      .from('.socrow',  { y: 15,  opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
-      .from('.hstats',  { y: 15,  opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
-      .from('.awrap',   { scale: 0.82, opacity: 0, duration: 1.1, ease: 'elastic.out(1, 0.5)' }, '-=0.9');
+    tl.from('.hbadge',           { y: -18, opacity: 0, duration: 0.6, ease: 'power3.out' })
+      .from('.hname',            { y: 35,  opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.3')
+      .from('.hsub',             { y: 18,  opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.5')
+      .from('.hdesc',            { y: 18,  opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+      .from('.hctas',            { y: 18,  opacity: 0, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+      .from('.socrow',           { y: 15,  opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+      .from('.hstats',           { y: 15,  opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+      .from('.hero-avatar-frame, .hero-bg-img-box', { scale: 0.9, opacity: 0, duration: 0.9, ease: 'power3.out' }, '-=0.8')
+      .from('.hero-tag',         { scale: 0.8, opacity: 0, stagger: 0.15, duration: 0.6, ease: 'back.out(1.4)' }, '-=0.5');
   }
 
   /* ─────────────────────────────────────────────────────── */
@@ -603,15 +651,40 @@
     const nb = document.getElementById('nb');
     if (!nb) return;
 
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nlinks a');
+
     window.addEventListener('scroll', () => {
       const sy = window.scrollY;
       nb.classList.toggle('scrolled', sy > 40);
+
       if (sy > prevScrollY + 6 && sy > 220) {
         nb.classList.add('hidden');
       } else if (sy < prevScrollY - 6) {
         nb.classList.remove('hidden');
       }
       prevScrollY = sy;
+
+      /* Active Link Spy for Single Page Sections */
+      let currentSection = '';
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 120;
+        const height = sec.offsetHeight;
+        if (sy >= top && sy < top + height) {
+          currentSection = sec.getAttribute('id');
+        }
+      });
+
+      if (currentSection) {
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href === `#${currentSection}` || href === `index.html#${currentSection}`) {
+            link.classList.add('act');
+          } else if (href.startsWith('#') || href.startsWith('index.html#')) {
+            link.classList.remove('act');
+          }
+        });
+      }
     }, { passive: true });
   }
 
@@ -619,8 +692,9 @@
   window.tMM = function () {
     const mm = document.getElementById('mm');
     const overlay = document.getElementById('mm-overlay');
-    mm?.classList.toggle('open');
+    const isOpen = mm?.classList.toggle('open');
     overlay?.classList.toggle('open');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   };
 
   /* Close Mobile Drawer */
@@ -629,6 +703,7 @@
     const overlay = document.getElementById('mm-overlay');
     mm?.classList.remove('open');
     overlay?.classList.remove('open');
+    document.body.style.overflow = '';
   };
 
   /* ─────────────────────────────────────────────────────── */
@@ -639,12 +714,17 @@
       const el = document.getElementById(id);
       if (!el) return;
       let n = 0;
-      const step = target / 80;
+      const step = target / 70;
       const timer = setInterval(() => {
         n += step;
-        if (n >= target) { n = target; clearInterval(timer); }
+        if (n >= target) { 
+          n = target; 
+          clearInterval(timer); 
+          el.textContent = isFloat ? n.toFixed(2) : Math.floor(n) + suffix;
+          return;
+        }
         el.textContent = isFloat ? n.toFixed(2) : Math.floor(n) + suffix;
-      }, 16);
+      }, 20);
     }
 
     const hero = document.getElementById('hero');
@@ -659,7 +739,7 @@
         }, 300);
         obs.disconnect();
       }
-    }, { threshold: 0.4 });
+    }, { threshold: 0.3 });
     obs.observe(hero);
   }
 
@@ -668,7 +748,7 @@
   /* ─────────────────────────────────────────────────────── */
   function initCardGlow() {
     document.addEventListener('mousemove', (e) => {
-      const cards = document.querySelectorAll('.glass-card, .pcard, .bot-card, .biz-card, .tool-card');
+      const cards = document.querySelectorAll('.glass-card, .pcard, .bot-card, .biz-card, .tool-card, .hero-avatar-frame');
       cards.forEach(card => {
         const rect = card.getBoundingClientRect();
         if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
@@ -688,8 +768,8 @@
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
-        const rx = (y / rect.height * -8).toFixed(2);
-        const ry = (x / rect.width  *  8).toFixed(2);
+        const rx = (y / rect.height * -6).toFixed(2);
+        const ry = (x / rect.width  *  6).toFixed(2);
         card.style.transform = `translateY(-6px) rotateX(${rx}deg) rotateY(${ry}deg)`;
       }, { passive: true });
       card.addEventListener('mouseleave', () => {
@@ -702,6 +782,7 @@
   /* ── FILTER & SEARCH ATTACHMENTS ───────────────────────── */
   /* ─────────────────────────────────────────────────────── */
   function initFilterEvents() {
+    /* Skills Filter */
     const sfBtns = document.querySelectorAll('.sf-btn');
     sfBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -711,6 +792,7 @@
       });
     });
 
+    /* Tools Filter & Search */
     const toolBtns = document.querySelectorAll('[data-tool-filter]');
     const toolSearch = document.getElementById('tool-search');
     toolBtns.forEach(btn => {
@@ -727,6 +809,7 @@
       });
     }
 
+    /* Projects Filter & Search */
     const projBtns = document.querySelectorAll('[data-proj-filter]');
     const projSearch = document.getElementById('proj-search');
     projBtns.forEach(btn => {
@@ -743,6 +826,7 @@
       });
     }
 
+    /* Bots Filter & Search */
     const botBtns = document.querySelectorAll('[data-bot-filter]');
     const botSearch = document.getElementById('bot-search');
     botBtns.forEach(btn => {
@@ -774,7 +858,7 @@
   }
 
   /* ─────────────────────────────────────────────────────── */
-  /* ── CONTACT FORM ENGINE (FUTURE-READY) ───────────────── */
+  /* ── CONTACT FORM ENGINE & CLIPBOARD ───────────────────── */
   /* ─────────────────────────────────────────────────────── */
   function showToast(msg, isError = false) {
     let toast = document.querySelector('.toast');
@@ -799,23 +883,25 @@
     const s = document.getElementById('fs')?.value?.trim();
     const m = document.getElementById('fm')?.value?.trim();
 
-    if (!n || !e || !m) { showToast('Please complete all required fields.', true); return; }
+    if (!n || !e || !m) { showToast('Please fill in your name, email, and message.', true); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) { showToast('Please enter a valid email address.', true); return; }
 
-    const sub = s || 'Project Inquiry via Portfolio';
-    const body = `Name: ${n}\nEmail: ${e}\n\n${m}`;
+    const sub = s || `Portfolio Inquiry from ${n}`;
+    const body = `Name: ${n}\nEmail: ${e}\n\nMessage:\n${m}`;
     window.location.href = `mailto:md.rifat@myself.com?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
-    showToast('Opening default email client...');
+    showToast('Launching your email client...');
   };
 
   window.copyEmail = function (btn) {
     navigator.clipboard.writeText('md.rifat@myself.com').then(() => {
-      btn.innerHTML = `<svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+      btn.innerHTML = `<svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied to Clipboard!`;
       btn.classList.add('copied');
       setTimeout(() => { 
-        btn.innerHTML = `<svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Email`;
+        btn.innerHTML = `<svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Email Address`;
         btn.classList.remove('copied'); 
       }, 2200);
+    }).catch(() => {
+      showToast('Could not copy automatically. Email: md.rifat@myself.com');
     });
   };
 
