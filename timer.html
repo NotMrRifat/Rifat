@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Countdown</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Hind+Siliguri:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .font-mono-digits {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .font-arabic {
+            font-family: 'Amiri', serif;
+        }
+
+        /* Glassmorphism card effect */
+        .glass-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Smooth transition for quotes fade in/out */
+        .quote-fade {
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .quote-hidden {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .quote-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Ambient glowing effect background */
+        .glow-bg {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Dark mode styling for native time picker */
+        input[type="time"] {
+            color-scheme: dark;
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col justify-between items-center relative select-none bg-black text-white px-4">
+
+    <!-- Subtle Background Ambient Glows -->
+    <div class="glow-bg top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="glow-bg bottom-10 left-1/2 -translate-x-1/2"></div>
+
+    <!-- Header Section (Top Spacer) -->
+    <header class="pt-8 text-center z-10 opacity-40 hover:opacity-100 transition-opacity duration-300">
+        <h2 class="text-xs tracking-[0.3em] uppercase text-gray-400 font-semibold">Official Result Countdown</h2>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex flex-col items-center justify-center w-full max-w-4xl z-10 my-auto">
+        
+        <!-- Rotating Verses Display Container -->
+        <div class="h-28 sm:h-32 flex items-center justify-center text-center px-6 w-full mb-6">
+            <div id="verse-container" class="quote-fade quote-visible flex flex-col items-center justify-center">
+                <p id="verse-text" class="text-2xl sm:text-3xl md:text-4xl text-gray-200 font-medium leading-relaxed">
+                    <!-- Verse inserted via JavaScript -->
+                </p>
+                <span id="verse-sub" class="text-xs sm:text-sm text-gray-500 mt-2 tracking-wider">
+                    <!-- Subtitle/Translation inserted via JS -->
+                </span>
+            </div>
+        </div>
+
+        <!-- Timer Display Box -->
+        <div class="glass-box rounded-3xl p-6 sm:p-10 md:p-12 w-full max-w-3xl flex flex-col items-center justify-center relative overflow-hidden">
+            <!-- Subtle edge light -->
+            <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+
+            <!-- Countdown Digits Grid -->
+            <div class="grid grid-cols-3 gap-3 sm:gap-6 md:gap-8 w-full text-center">
+                
+                <!-- Hours Column -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full py-4 sm:py-6 bg-white/5 rounded-2xl border border-white/5 flex justify-center items-center">
+                        <span id="hours" class="font-mono-digits text-4xl sm:text-7xl md:text-8xl font-bold tracking-tight text-white drop-shadow-md">00</span>
+                    </div>
+                    <span class="text-xs sm:text-sm uppercase tracking-widest text-gray-400 mt-3 font-medium">ঘণ্টা</span>
+                </div>
+
+                <!-- Minutes Column -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full py-4 sm:py-6 bg-white/5 rounded-2xl border border-white/5 flex justify-center items-center">
+                        <span id="minutes" class="font-mono-digits text-4xl sm:text-7xl md:text-8xl font-bold tracking-tight text-white drop-shadow-md">00</span>
+                    </div>
+                    <span class="text-xs sm:text-sm uppercase tracking-widest text-gray-400 mt-3 font-medium">মিনিট</span>
+                </div>
+
+                <!-- Seconds Column -->
+                <div class="flex flex-col items-center">
+                    <div class="w-full py-4 sm:py-6 bg-white/5 rounded-2xl border border-white/5 flex justify-center items-center">
+                        <span id="seconds" class="font-mono-digits text-4xl sm:text-7xl md:text-8xl font-bold tracking-tight text-white/90 drop-shadow-md">00</span>
+                    </div>
+                    <span class="text-xs sm:text-sm uppercase tracking-widest text-gray-400 mt-3 font-medium">সেকেন্ড</span>
+                </div>
+
+            </div>
+
+            <!-- Status Indicator & Change Time Button -->
+            <div class="mt-8 flex flex-col sm:flex-row items-center gap-4">
+                <div class="flex items-center space-x-2">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    <span id="target-info" class="text-xs text-gray-400 font-light tracking-wide">টার্গেট সময়: বেলা ১১:০০ টা</span>
+                </div>
+
+                <!-- Button to open time selection modal -->
+                <button onclick="openTimeModal()" class="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/15 border border-white/10 text-xs text-gray-300 hover:text-white transition-all duration-200 cursor-pointer">
+                    সময় পরিবর্তন করুন
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Time Selection Modal -->
+    <div id="time-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md px-4">
+        <div class="glass-box rounded-3xl p-6 sm:p-8 w-full max-w-sm flex flex-col items-center text-center relative">
+            <h3 class="text-xl font-semibold text-white mb-2">টার্গেট সময় সেট করুন</h3>
+            <p class="text-xs text-gray-400 mb-6">আপনি কোন সময়ের জন্য কাউন্টডাউন চালু করতে চান?</p>
+            
+            <input type="time" id="time-input" class="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white text-center font-mono-digits text-2xl focus:outline-none focus:border-emerald-500/50 mb-6" value="11:00">
+            
+            <div class="flex gap-3 w-full">
+                <button id="cancel-btn" onclick="closeTimeModal()" class="hidden flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-sm text-gray-300 transition-colors cursor-pointer">
+                    বাতিল
+                </button>
+                <button onclick="saveTargetTime()" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-sm font-medium text-white transition-colors cursor-pointer shadow-lg shadow-emerald-900/20">
+                    সেভ করুন
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extremely Subtle Bottom Footer Links -->
+    <footer class="pb-3 pt-2 text-center z-10 w-full opacity-20 hover:opacity-80 transition-opacity duration-500">
+        <div class="flex flex-wrap justify-center items-center gap-4 text-[10px] sm:text-xs text-gray-500 tracking-wider">
+            <a href="https://www.educationboardresults.gov.bd/v2/home" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="hover:text-gray-300 transition-colors duration-200">
+                EDUCATION BOARD Server
+            </a>
+            <span class="text-gray-700">•</span>
+            <a href="https://result.dhakaeducationboard.gov.bd/v2/home" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="hover:text-gray-300 transition-colors duration-200">
+                Dhaka Board Server
+            </a>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // List of rotating verses/ayats
+        const verses = [
+            {
+                text: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
+                sub: "আমাদের জন্য আল্লাহ্‌ই যথেষ্ট, তিনি কতই না উত্তম কর্মবিধায়ক",
+                isArabic: true
+            },
+            {
+                text: "يَا فَتَّاحُ",
+                sub: "হে পরম বিজয়দানকারী / উন্মুক্তকারী",
+                isArabic: true
+            },
+            {
+                text: "আর অচিরেই আপনার রব আপনাকে অনুগ্রহ দান করবেন, ফলে আপনি সন্তুষ্ট হবেন।",
+                sub: "সূরা আদ-দুহা: ৫",
+                isArabic: false
+            }
+        ];
+
+        let currentVerseIndex = 0;
+
+        const verseContainer = document.getElementById('verse-container');
+        const verseText = document.getElementById('verse-text');
+        const verseSub = document.getElementById('verse-sub');
+
+        function updateVerse() {
+            verseContainer.classList.remove('quote-visible');
+            verseContainer.classList.add('quote-hidden');
+
+            setTimeout(() => {
+                const current = verses[currentVerseIndex];
+                verseText.textContent = current.text;
+                verseSub.textContent = current.sub;
+
+                if (current.isArabic) {
+                    verseText.classList.add('font-arabic');
+                } else {
+                    verseText.classList.remove('font-arabic');
+                }
+
+                verseContainer.classList.remove('quote-hidden');
+                verseContainer.classList.add('quote-visible');
+
+                currentVerseIndex = (currentVerseIndex + 1) % verses.length;
+            }, 1000);
+        }
+
+        updateVerse();
+        setInterval(updateVerse, 6000);
+
+        // --- Local Storage & Modal Logic ---
+        const STORAGE_KEY = 'countdownTargetTime';
+        const modal = document.getElementById('time-modal');
+        const timeInput = document.getElementById('time-input');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const targetInfo = document.getElementById('target-info');
+
+        // Convert 24-hour time (HH:MM) to readable Bengali 12-hour format
+        function formatBengaliTime(timeStr) {
+            const [hourStr, minuteStr] = timeStr.split(':');
+            let hour = parseInt(hourStr, 10);
+            
+            let period = '';
+            if (hour >= 4 && hour < 12) period = 'সকাল';
+            else if (hour >= 12 && hour < 16) period = 'দুপুর';
+            else if (hour >= 16 && hour < 18) period = 'বিকাল';
+            else if (hour >= 18 && hour < 20) period = 'সন্ধ্যা';
+            else period = 'রাত';
+
+            const displayHour = hour % 12 || 12;
+            const toBengaliDigits = (num) => String(num).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+            
+            return `টার্গেট সময়: ${period} ${toBengaliDigits(String(displayHour).padStart(2, '0'))}:${toBengaliDigits(minuteStr)} টা`;
+        }
+
+        function openTimeModal(isFirstVisit = false) {
+            const savedTime = localStorage.getItem(STORAGE_KEY);
+            if (savedTime) {
+                timeInput.value = savedTime;
+                cancelBtn.classList.remove('hidden');
+            } else {
+                timeInput.value = '11:00';
+                cancelBtn.classList.add('hidden'); // Hide cancel on very first setup
+            }
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeTimeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function saveTargetTime() {
+            const selectedTime = timeInput.value;
+            if (!selectedTime) return;
+
+            localStorage.setItem(STORAGE_KEY, selectedTime);
+            targetTime = getTargetTime();
+            targetInfo.textContent = formatBengaliTime(selectedTime);
+            updateCountdown();
+            closeTimeModal();
+        }
+
+        // Countdown Logic
+        function getTargetTime() {
+            const savedTime = localStorage.getItem(STORAGE_KEY) || '11:00';
+            const [hours, minutes] = savedTime.split(':').map(Number);
+
+            const now = new Date();
+            const target = new Date();
+            target.setHours(hours, minutes, 0, 0);
+
+            // If target time has already passed today, set for tomorrow
+            if (now >= target) {
+                target.setDate(target.getDate() + 1);
+            }
+            return target;
+        }
+
+        let targetTime = getTargetTime();
+
+        function updateCountdown() {
+            const now = new Date();
+            let diff = targetTime - now;
+
+            if (diff <= 0) {
+                targetTime = getTargetTime();
+                diff = targetTime - now;
+            }
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        // Check on page load if time is already saved
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTime = localStorage.getItem(STORAGE_KEY);
+            if (!savedTime) {
+                openTimeModal(true);
+            } else {
+                targetInfo.textContent = formatBengaliTime(savedTime);
+            }
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
+</body>
+</html>
