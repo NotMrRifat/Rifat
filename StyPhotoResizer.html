@@ -86,6 +86,37 @@ input[type=range]{flex:1;accent-color:var(--maroon);height:28px;min-width:0}
 .warn{margin-top:8px;padding:10px 12px;border-radius:10px;background:#fff1f1;border:1px solid rgba(99,13,22,.3);color:var(--maroon);font-size:13px}
 
 /* form */
+.du-card{background:linear-gradient(135deg,rgba(99,13,22,.06),rgba(99,13,22,.02));border:1.5px solid var(--maroon);border-radius:12px;padding:12px 14px;margin-bottom:14px;display:flex;flex-direction:column;gap:8px}
+.du-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.du-btn{appearance:none;border:1px solid var(--maroon);background:var(--maroon);color:var(--cream);font:700 13px/1 'Inter',sans-serif;padding:8px 14px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.18s;box-shadow:0 2px 8px rgba(99,13,22,.2)}
+.du-btn:hover{background:var(--maroon-d);transform:translateY(-1px);box-shadow:0 4px 12px rgba(99,13,22,.3)}
+.du-specs{display:flex;flex-wrap:wrap;gap:5px;font-size:11.5px}
+.du-spec{background:var(--cream2);border:1px solid var(--line);padding:2px 8px;border-radius:999px;font-weight:600;color:var(--maroon)}
+.du-bg-notice{display:flex;align-items:flex-start;gap:6px;font-size:12px;color:var(--maroon);background:#fff1f1;border:1px dashed rgba(99,13,22,.35);padding:7px 10px;border-radius:8px;line-height:1.4}
+.du-bg-notice svg{flex-shrink:0;margin-top:2px}
+
+/* Background Changer Tool (Non-AI) */
+.bg-changer{background:var(--white);border:1px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.bg-changer-toggle{width:100%;background:var(--cream2);border:0;border-bottom:1px solid transparent;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font:600 13.5px 'Inter',sans-serif;color:var(--ink);transition:.15s}
+.bg-changer-toggle:hover{background:#f5e8d9}
+.bg-changer.open .bg-changer-toggle{border-bottom-color:var(--line)}
+.bg-changer-arrow{transition:transform .2s ease;font-size:11px}
+.bg-changer.open .bg-changer-arrow{transform:rotate(180deg)}
+.bg-changer-body{padding:14px;display:none;flex-direction:column;gap:12px}
+.bg-changer.open .bg-changer-body{display:flex}
+.bg-swatches{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bg-swatch{width:32px;height:32px;border-radius:50%;border:2px solid #ccc;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.15);position:relative;transition:transform .15s, border-color .15s;padding:0}
+.bg-swatch:hover{transform:scale(1.12)}
+.bg-swatch.active{border-color:var(--maroon);box-shadow:0 0 0 2px var(--maroon)}
+.bg-swatch.active::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;color:var(--ink)}
+.bg-swatch.dark-text.active::after{color:#fff}
+.bg-color-picker-wrap{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600}
+.bg-color-picker{width:32px;height:32px;border:1px solid var(--line);border-radius:50%;cursor:pointer;padding:0;background:none;-webkit-appearance:none;appearance:none}
+.bg-color-picker::-webkit-color-swatch-wrapper{padding:0}
+.bg-color-picker::-webkit-color-swatch{border-radius:50%;border:1px solid rgba(0,0,0,.15)}
+.bg-slider-row{display:flex;align-items:center;gap:10px}
+.bg-slider-row label{font-size:12.5px;font-weight:600;min-width:110px}
+.bg-slider-row output{font-size:12.5px;font-weight:600;min-width:32px;text-align:right}
 .chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
 .chip{appearance:none;border:1px solid var(--line);background:var(--cream2);color:var(--ink);font:500 12.5px 'Inter',sans-serif;padding:7px 11px;border-radius:999px;cursor:pointer}
 .chip:hover{border-color:var(--maroon);color:var(--maroon)}
@@ -189,7 +220,10 @@ main{flex:1;padding-bottom:40px}
       <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg></div>
       <h2>Upload your photo or signature</h2>
       <p>Drag &amp; drop, paste (Ctrl+V) or choose from your device. JPG, PNG, WebP supported.</p>
-      <button class="btn primary" id="pick" type="button">Choose photo</button>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;align-items:center">
+        <button class="btn primary" id="pick" type="button">Choose photo</button>
+        <button class="btn" id="duPrePickBtn" type="button" title="Pre-configure Dhaka University Format">🎓 Dhaka University Format</button>
+      </div>
       <input type="file" id="file" accept="image/*" multiple hidden>
     </div>
 
@@ -206,10 +240,64 @@ main{flex:1;padding-bottom:40px}
         <p class="hint" id="hint">Drag the image to reposition · scroll or pinch to zoom</p>
         <div class="info" id="info">—</div>
         <div class="warn" id="warn" hidden></div>
+
+        <!-- Collapsible Background Changer (Non-AI) -->
+        <div class="bg-changer" id="bgChangerBox">
+          <button class="bg-changer-toggle" type="button" id="bgToggle" aria-expanded="false">
+            <span>🎨 Passport Background Changer <small style="font-weight:400;color:var(--muted);margin-left:4px">(Optional · No AI)</small></span>
+            <span class="bg-changer-arrow">▼</span>
+          </button>
+          <div class="bg-changer-body" id="bgBody">
+            <div style="font-size:12px;color:var(--muted);line-height:1.4">
+              Replaces detected outer background with passport-standard tones using pure browser edge flood-fill. Internal colors (face, clothing) are protected.
+            </div>
+            <div>
+              <div class="lbl" style="margin-bottom:6px">Passport Standard Colors</div>
+              <div class="bg-swatches" id="bgSwatches">
+                <button type="button" class="bg-swatch active" data-color="#ffffff" title="Plain White (#FFFFFF)" style="background:#ffffff" aria-label="Plain White"></button>
+                <button type="button" class="bg-swatch" data-color="#d6eaf8" title="Light Blue (#D6EAF8)" style="background:#d6eaf8" aria-label="Light Blue"></button>
+                <button type="button" class="bg-swatch dark-text" data-color="#2e86c1" title="Passport Blue (#2E86C1)" style="background:#2e86c1" aria-label="Passport Blue"></button>
+                <label class="bg-color-picker-wrap" title="Custom light color">
+                  <input type="color" id="bgCustomColor" class="bg-color-picker" value="#f0f7fa" aria-label="Custom Color">
+                  <span>Custom</span>
+                </label>
+              </div>
+            </div>
+            <div class="bg-slider-row">
+              <label for="bgTol">Tolerance <output id="bgTolVal">35</output></label>
+              <input type="range" id="bgTol" min="10" max="80" value="35" step="1">
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+              <button type="button" class="btn sm primary" id="bgApplyBtn">✨ Apply Background</button>
+              <button type="button" class="btn sm" id="bgResetBtn">↺ Reset to Original</button>
+            </div>
+            <div id="bgStatus" style="font-size:11.5px;color:var(--muted);min-height:16px"></div>
+          </div>
+        </div>
       </div>
 
       <div class="panel">
         <h3>Output settings</h3>
+
+        <!-- DU Admission Quick Preset Card -->
+        <div class="du-card" id="duPresetCard">
+          <div class="du-card-top">
+            <button type="button" class="du-btn" id="duPresetBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              Dhaka University Format
+            </button>
+            <div class="du-specs">
+              <span class="du-spec">Min 450×550 px</span>
+              <span class="du-spec">Min 20 KB</span>
+              <span class="du-spec">JPG</span>
+            </div>
+          </div>
+          <div class="du-bg-notice" id="duBgNotice">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span><strong>DU Rule:</strong> Photo must have a plain white background (pure white #FFFFFF background is filled automatically).</span>
+          </div>
+        </div>
+
         <div class="lbl">Quick presets</div>
         <div class="chips" id="presets"></div>
 
@@ -305,7 +393,7 @@ main{flex:1;padding-bottom:40px}
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 const el={};
-['file','drop','pick','work','cv','w','h','unit','dpi','fmt','q','qv','qrow','maxkb','kbnote','zoom','zrow','zv','hint','info','warn','dl','swap','rotL','rotR','reset','change','presets','libGrid','libEmpty','libStore','libCount','libClear','toast','pop','popX','year'].forEach(id=>el[id]=document.getElementById(id));
+['file','drop','pick','work','cv','w','h','unit','dpi','fmt','q','qv','qrow','maxkb','kbnote','zoom','zrow','zv','hint','info','warn','dl','swap','rotL','rotR','reset','change','presets','libGrid','libEmpty','libStore','libCount','libClear','toast','pop','popX','year','duPresetBtn','duPrePickBtn','duPresetCard','bgToggle','bgChangerBox','bgBody','bgTol','bgTolVal','bgApplyBtn','bgResetBtn','bgCustomColor','bgStatus'].forEach(id=>el[id]=document.getElementById(id));
 el.year.textContent=new Date().getFullYear();
 
 /* ---------- helpers ---------- */
@@ -361,7 +449,8 @@ async function saveRecord(kind,name,blob,bmp){
 }
 
 /* ---------- image state ---------- */
-const S={bmp:null,orig:null,iw:0,ih:0,ow:0,oh:0,base:'photo',mode:'crop',zoom:1,panX:0,panY:0,first:true,id:null};
+const S={bmp:null,orig:null,cleanBmp:null,iw:0,ih:0,ow:0,oh:0,base:'photo',mode:'crop',zoom:1,panX:0,panY:0,first:true,id:null};
+let isDUActive=false;
 const cache=new Map();
 let lastUnit='px';
 
@@ -461,12 +550,36 @@ function patchDpi(buf,type,dpi){
   }
   return b;
 }
+function padJpegMinSize(u8,minBytes){
+  if(u8[0]!==0xFF||u8[1]!==0xD8)return u8;
+  if(u8.length>=minBytes)return u8;
+  let insertPos=2;
+  if(u8[2]===0xFF&&(u8[3]===0xE0||u8[3]===0xE1)){
+    const appLen=(u8[4]<<8)|u8[5];
+    insertPos=2+2+appLen;
+  }
+  const needed=minBytes-u8.length;
+  const L=Math.min(65535,needed+2);
+  const comHeader=new Uint8Array([0xFF,0xFE,(L>>8)&255,L&255]);
+  const payload=new Uint8Array(L-2);
+  payload.fill(0x20);
+  const out=new Uint8Array(u8.length+4+payload.length);
+  out.set(u8.subarray(0,insertPos),0);
+  out.set(comHeader,insertPos);
+  out.set(payload,insertPos+4);
+  out.set(u8.subarray(insertPos),insertPos+4+payload.length);
+  return out;
+}
 const toBlob=(cv,type,q)=>new Promise(r=>cv.toBlob(r,type,q));
-async function enc(cv,type,q,dpi){
+async function enc(cv,type,q,dpi,minBytes=0){
   const raw=await toBlob(cv,type,q);
   if(!raw)throw new Error('encode failed');
-  const out=patchDpi(await raw.arrayBuffer(),raw.type,dpi);
-  return new Blob([out],{type:raw.type});
+  let buf=await raw.arrayBuffer();
+  let u8=patchDpi(buf,raw.type,dpi);
+  if(raw.type==='image/jpeg'&&minBytes>0&&u8.length<minBytes){
+    u8=padJpegMinSize(u8,minBytes);
+  }
+  return new Blob([u8],{type:raw.type});
 }
 async function encode(){
   const {W,H,dpi}=targetPx();
@@ -475,24 +588,25 @@ async function encode(){
   draw(cv.getContext('2d'),W,H);
   const maxKB=parseFloat(el.maxkb.value)||0;
   const qTop=(+el.q.value)/100;
+  const minBytes=(isDUActive&&fmt==='jpeg')?20480:0;
   let warn='',best,q=null;
   if(fmt==='png'){
     best=await enc(cv,type,undefined,dpi);
     if(maxKB&&best.size>maxKB*1024)warn='PNG cannot be compressed to a KB limit. Switch to JPG or WebP.';
   }else if(!maxKB){
-    q=qTop;best=await enc(cv,type,q,dpi);
+    q=qTop;best=await enc(cv,type,q,dpi,minBytes);
   }else{
     const limit=maxKB*1024;
     let lo=0.03,hi=qTop;
-    let b=await enc(cv,type,hi,dpi);
+    let b=await enc(cv,type,hi,dpi,minBytes);
     if(b.size<=limit){best=b;q=hi;}
     else{
-      const b0=await enc(cv,type,lo,dpi);
+      const b0=await enc(cv,type,lo,dpi,minBytes);
       if(b0.size>limit){best=b0;q=lo;warn='Could not reach '+maxKB+' KB at this pixel size. Try a smaller size or a larger KB limit.';}
       else{
         best=b0;q=lo;
         for(let i=0;i<10;i++){
-          const mid=(lo+hi)/2;const bm=await enc(cv,type,mid,dpi);
+          const mid=(lo+hi)/2;const bm=await enc(cv,type,mid,dpi,minBytes);
           if(bm.size<=limit){best=bm;q=mid;lo=mid;}else hi=mid;
         }
       }
@@ -532,7 +646,7 @@ async function decode(blob){
   catch(e){try{return await createImageBitmap(blob);}catch(e2){return null;}}
 }
 function setSource(bmp,name,id){
-  S.bmp=S.orig=bmp;S.iw=S.ow=bmp.width;S.ih=S.oh=bmp.height;S.id=id||null;
+  S.bmp=S.orig=S.cleanBmp=bmp;S.iw=S.ow=bmp.width;S.ih=S.oh=bmp.height;S.id=id||null;
   S.base=(name||'photo').replace(/\.[^.]+$/,'').replace(/[^\w\-]+/g,'_').slice(0,40)||'photo';
   S.zoom=1;S.panX=S.panY=0;cache.clear();
   if(S.first){
@@ -635,11 +749,265 @@ el.rotate=dir=>{
   if(!S.bmp)return;
   const c=document.createElement('canvas');c.width=S.ih;c.height=S.iw;
   const x=c.getContext('2d');x.translate(c.width/2,c.height/2);x.rotate(dir*Math.PI/2);x.drawImage(S.bmp,-S.iw/2,-S.ih/2);
-  S.bmp=c;[S.iw,S.ih]=[S.ih,S.iw];cache.clear();S.panX=S.panY=0;S.zoom=1;syncZoomUI();refresh();
+  S.bmp=S.cleanBmp=c;[S.iw,S.ih]=[S.ih,S.iw];cache.clear();S.panX=S.panY=0;S.zoom=1;syncZoomUI();refresh();
 };
 el.rotL.onclick=()=>el.rotate(-1);
 el.rotR.onclick=()=>el.rotate(1);
-el.reset.onclick=()=>{S.bmp=S.orig;S.iw=S.ow;S.ih=S.oh;cache.clear();S.zoom=1;S.panX=S.panY=0;syncZoomUI();refresh();};
+el.reset.onclick=()=>{S.bmp=S.cleanBmp=S.orig;S.iw=S.ow;S.ih=S.oh;cache.clear();S.zoom=1;S.panX=S.panY=0;syncZoomUI();refresh();};
+
+/* ---------- Dhaka University Format Preset ---------- */
+function applyDUPreset(silent){
+  isDUActive=true;
+  el.unit.value='px';lastUnit='px';
+  el.w.value=450;
+  el.h.value=550;
+  el.fmt.value='jpeg';
+  syncFmt();
+  el.q.value=95;
+  el.qv.textContent='95%';
+  el.maxkb.value='';
+  setMode('crop',true);
+
+  if(!S.bmp){
+    toast('Please upload an image first!');
+    return;
+  }
+  refresh();
+  if(!silent)toast('Dhaka University format applied (Min 450×550 px, JPG, White BG)');
+}
+if(el.duPresetBtn)el.duPresetBtn.onclick=()=>applyDUPreset(false);
+if(el.duPrePickBtn)el.duPrePickBtn.onclick=()=>{
+  applyDUPreset(true);
+  toast('Dhaka University preset set. Please choose your photo!');
+  el.file.click();
+};
+
+/* ---------- Non-AI Passport Background Changer ---------- */
+let activeBgColor='#ffffff';
+
+function hexToRgb(hex){
+  hex=(hex||'#ffffff').replace(/^#/,'');
+  if(hex.length===3)hex=hex.split('').map(x=>x+x).join('');
+  const n=parseInt(hex,16)||0;
+  return {r:(n>>16)&255,g:(n>>8)&255,b:n&255};
+}
+
+function runBgChanger(colorHex,tolVal){
+  if(!S.bmp){toast('Please upload an image first!');return;}
+  const src=S.cleanBmp||S.orig||S.bmp;
+  const W=src.width,H=src.height;
+  if(!W||!H)return;
+
+  const targetRgb=hexToRgb(colorHex);
+  const off=document.createElement('canvas');off.width=W;off.height=H;
+  const ctx=off.getContext('2d');ctx.drawImage(src,0,0);
+
+  const imgData=ctx.getImageData(0,0,W,H);
+  const data=imgData.data;
+
+  // 1. Smart Edge/Corner Detection: Sample outer corner and edge pixels
+  const sampleSize=Math.max(4,Math.min(16,Math.floor(Math.min(W,H)*0.04)));
+  let sumR=0,sumG=0,sumB=0,count=0;
+
+  function sampleBox(x0,y0,x1,y1){
+    for(let y=y0;y<y1;y++){
+      for(let x=x0;x<x1;x++){
+        const idx=(y*W+x)*4;
+        sumR+=data[idx];sumG+=data[idx+1];sumB+=data[idx+2];
+        count++;
+      }
+    }
+  }
+
+  sampleBox(0,0,sampleSize,sampleSize);
+  sampleBox(W-sampleSize,0,W,sampleSize);
+  const midX=Math.floor(W/2);
+  sampleBox(Math.max(0,midX-sampleSize),0,Math.min(W,midX+sampleSize),Math.min(4,sampleSize));
+
+  const bgR=count?Math.round(sumR/count):255;
+  const bgG=count?Math.round(sumG/count):255;
+  const bgB=count?Math.round(sumB/count):255;
+
+  // 2. Edge-Aware Flood Fill: BFS from outer perimeter inward
+  const total=W*H;
+  const mask=new Uint8Array(total);
+  const queue=new Int32Array(total);
+  let head=0,tail=0;
+
+  const tol=tolVal;
+  const tolSq=tol*tol;
+  const seedTolSq=(tol*1.25)*(tol*1.25);
+
+  function distSq(r,g,b){
+    const dr=r-bgR,dg=g-bgG,db=b-bgB;
+    return dr*dr+dg*dg+db*db;
+  }
+
+  // Seed borders
+  for(let x=0;x<W;x++){
+    const iT=x*4;
+    if(distSq(data[iT],data[iT+1],data[iT+2])<=seedTolSq){
+      mask[x]=1;queue[tail++]=x;
+    }
+    const pB=(H-1)*W+x;
+    const iB=pB*4;
+    if(!mask[pB]&&distSq(data[iB],data[iB+1],data[iB+2])<=seedTolSq){
+      mask[pB]=1;queue[tail++]=pB;
+    }
+  }
+  for(let y=1;y<H-1;y++){
+    const pL=y*W;
+    const iL=pL*4;
+    if(!mask[pL]&&distSq(data[iL],data[iL+1],data[iL+2])<=seedTolSq){
+      mask[pL]=1;queue[tail++]=pL;
+    }
+    const pR=y*W+(W-1);
+    const iR=pR*4;
+    if(!mask[pR]&&distSq(data[iR],data[iR+1],data[iR+2])<=seedTolSq){
+      mask[pR]=1;queue[tail++]=pR;
+    }
+  }
+
+  // BFS traversal
+  while(head<tail){
+    const curr=queue[head++];
+    const cx=curr%W;
+    const cy=Math.floor(curr/W);
+
+    if(cx>0){
+      const n=curr-1;
+      if(!mask[n]){
+        const i=n*4;
+        if(distSq(data[i],data[i+1],data[i+2])<=tolSq){mask[n]=1;queue[tail++]=n;}
+      }
+    }
+    if(cx<W-1){
+      const n=curr+1;
+      if(!mask[n]){
+        const i=n*4;
+        if(distSq(data[i],data[i+1],data[i+2])<=tolSq){mask[n]=1;queue[tail++]=n;}
+      }
+    }
+    if(cy>0){
+      const n=curr-W;
+      if(!mask[n]){
+        const i=n*4;
+        if(distSq(data[i],data[i+1],data[i+2])<=tolSq){mask[n]=1;queue[tail++]=n;}
+      }
+    }
+    if(cy<H-1){
+      const n=curr+W;
+      if(!mask[n]){
+        const i=n*4;
+        if(distSq(data[i],data[i+1],data[i+2])<=tolSq){mask[n]=1;queue[tail++]=n;}
+      }
+    }
+  }
+
+  // 3. Smooth Edge Feathering / Anti-Aliasing along mask borders
+  const alpha=new Float32Array(total);
+  for(let i=0;i<total;i++)alpha[i]=mask[i]?1.0:0.0;
+
+  const feathered=new Float32Array(total);
+  for(let y=0;y<H;y++){
+    for(let x=0;x<W;x++){
+      const idx=y*W+x;
+      const isBg=mask[idx];
+      let isBoundary=false;
+      for(let dy=-1;dy<=1&&!isBoundary;dy++){
+        const ny=y+dy;
+        if(ny<0||ny>=H)continue;
+        for(let dx=-1;dx<=1;dx++){
+          const nx=x+dx;
+          if(nx<0||nx>=W)continue;
+          if(mask[ny*W+nx]!==isBg){isBoundary=true;break;}
+        }
+      }
+      if(isBoundary){
+        let s=0,c=0;
+        for(let dy=-1;dy<=1;dy++){
+          const ny=y+dy;
+          if(ny<0||ny>=H)continue;
+          for(let dx=-1;dx<=1;dx++){
+            const nx=x+dx;
+            if(nx<0||nx>=W)continue;
+            s+=alpha[ny*W+nx];
+            c++;
+          }
+        }
+        feathered[idx]=s/c;
+      }else{
+        feathered[idx]=alpha[idx];
+      }
+    }
+  }
+
+  // 4. Alpha blend target color onto background
+  for(let i=0;i<total;i++){
+    const bgA=feathered[i];
+    if(bgA<=0)continue;
+    const p=i*4;
+    const subA=1.0-bgA;
+    data[p]=Math.round(data[p]*subA+targetRgb.r*bgA);
+    data[p+1]=Math.round(data[p+1]*subA+targetRgb.g*bgA);
+    data[p+2]=Math.round(data[p+2]*subA+targetRgb.b*bgA);
+    data[p+3]=255;
+  }
+
+  ctx.putImageData(imgData,0,0);
+  S.bmp=off;
+  cache.clear();
+  refresh();
+  if(el.bgStatus)el.bgStatus.textContent='Applied background: '+colorHex.toUpperCase()+' (tolerance: '+tolVal+')';
+  toast('Background updated ('+colorHex.toUpperCase()+')');
+}
+
+function resetBackground(){
+  if(!S.cleanBmp&&!S.orig)return;
+  S.bmp=S.cleanBmp||S.orig;
+  cache.clear();
+  refresh();
+  if(el.bgStatus)el.bgStatus.textContent='Reset to original photo background.';
+  toast('Background reset to original');
+}
+
+if(el.bgToggle){
+  el.bgToggle.onclick=()=>{
+    const open=el.bgChangerBox.classList.toggle('open');
+    el.bgToggle.setAttribute('aria-expanded',open?'true':'false');
+  };
+}
+
+$$('.bg-swatch').forEach(b=>{
+  b.onclick=()=>{
+    $$('.bg-swatch').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    activeBgColor=b.dataset.color;
+    runBgChanger(activeBgColor,+el.bgTol.value);
+  };
+});
+
+if(el.bgCustomColor){
+  el.bgCustomColor.onchange=()=>{
+    $$('.bg-swatch').forEach(x=>x.classList.remove('active'));
+    activeBgColor=el.bgCustomColor.value;
+    runBgChanger(activeBgColor,+el.bgTol.value);
+  };
+}
+
+if(el.bgTol){
+  el.bgTol.oninput=()=>{
+    if(el.bgTolVal)el.bgTolVal.textContent=el.bgTol.value;
+  };
+}
+
+if(el.bgApplyBtn){
+  el.bgApplyBtn.onclick=()=>runBgChanger(activeBgColor,+el.bgTol.value);
+}
+
+if(el.bgResetBtn){
+  el.bgResetBtn.onclick=resetBackground;
+}
 
 /* drag + pinch on canvas */
 const ptrs=new Map();let pinchD=0;
