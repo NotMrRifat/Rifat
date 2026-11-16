@@ -775,10 +775,288 @@
   /* ══════════════════════════════════════════════════════════ */
   /* ── MAGNETIC BUTTON INTERACTIONS ───────────────────────── */
   /* ══════════════════════════════════════════════════════════ */
+  
+  /* ══════════════════════════════════════════════════════════ */
+  /* ── SPECIAL INTERACTION: PROFILE AVATAR CIRCULAR REVEAL ─── */
+  /* ══════════════════════════════════════════════════════════ */
+  function initAvatarReveal() {
+    var frame = document.getElementById('hero-avatar-frame');
+    var lens = document.getElementById('avatar-reveal-lens');
+    var hint = document.getElementById('avatar-reveal-hint');
+    if (!frame || !lens) return;
+
+    var curX = 0, curY = 0;
+    var targetX = 0, targetY = 0;
+    var radius = 0, targetRadius = 0;
+    var isHovered = false;
+    var rafId = null;
+
+    function updateLens() {
+      if (isHovered || radius > 0.5) {
+        curX += (targetX - curX) * 0.22;
+        curY += (targetY - curY) * 0.22;
+        radius += (targetRadius - radius) * 0.2;
+
+        lens.style.setProperty('--lens-x', curX.toFixed(1) + 'px');
+        lens.style.setProperty('--lens-y', curY.toFixed(1) + 'px');
+        lens.style.setProperty('--lens-r', radius.toFixed(1) + 'px');
+
+        rafId = requestAnimationFrame(updateLens);
+      } else {
+        lens.classList.remove('revealing');
+        rafId = null;
+      }
+    }
+
+    frame.addEventListener('mouseenter', function (e) {
+      if (isMobile) return;
+      isHovered = true;
+      lens.classList.add('revealing');
+      var rect = frame.getBoundingClientRect();
+      targetX = curX = e.clientX - rect.left;
+      targetY = curY = e.clientY - rect.top;
+      targetRadius = 85;
+      if (!rafId) rafId = requestAnimationFrame(updateLens);
+    });
+
+    frame.addEventListener('mousemove', function (e) {
+      if (isMobile) return;
+      var rect = frame.getBoundingClientRect();
+      targetX = e.clientX - rect.left;
+      targetY = e.clientY - rect.top;
+      targetRadius = 85;
+      if (!rafId) rafId = requestAnimationFrame(updateLens);
+    }, { passive: true });
+
+    frame.addEventListener('mouseleave', function () {
+      if (isMobile) return;
+      isHovered = false;
+      targetRadius = 0;
+    });
+
+    /* Touch & Tap Toggle for Mobile & Accessibility */
+    function toggleTouchReveal(e) {
+      if (e) e.preventDefault();
+      var isRevealed = lens.classList.toggle('touch-revealed');
+      if (hint) {
+        var hintText = hint.querySelector('.hint-text');
+        if (hintText) {
+          hintText.textContent = isRevealed ?
+            'Alter-Ego Active! Tap to switch' :
+            'Hover or tap portrait to reveal Cyber Alter-Ego';
+        }
+      }
+    }
+
+    if (hint) {
+      hint.addEventListener('click', toggleTouchReveal);
+    }
+    frame.addEventListener('click', function (e) {
+      if (isMobile || ('ontouchstart' in window)) {
+        toggleTouchReveal(e);
+      }
+    });
+  }
+
+  /* ══════════════════════════════════════════════════════════ */
+  /* ── EXPERIMENTAL INTERACTIVE BUTTON LAB ─────────────────── */
+  /* ══════════════════════════════════════════════════════════ */
+  function initButtonLab() {
+    /* 1. Bag Tear / Rip Button Interaction */
+    var ripContainers = document.querySelectorAll('.btn-rip-container');
+    
+    // Synthetic Audio Pop / Snap via Web Audio API
+    function playRipAudio() {
+      try {
+        var AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        var ctx = new AudioCtx();
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(140, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.12);
+      } catch (err) {
+        // AudioContext not allowed or not supported
+      }
+    }
+
+    // Spark / Confetti Burst on Seal Tear
+    function triggerSparks(x, y) {
+      for (var i = 0; i < 16; i++) {
+        var spark = document.createElement('div');
+        spark.style.position = 'fixed';
+        spark.style.left = x + 'px';
+        spark.style.top = y + 'px';
+        spark.style.width = '5px';
+        spark.style.height = '5px';
+        spark.style.borderRadius = '50%';
+        spark.style.backgroundColor = i % 2 === 0 ? '#00e5ff' : '#ff9100';
+        spark.style.boxShadow = '0 0 10px ' + (i % 2 === 0 ? '#00e5ff' : '#ff9100');
+        spark.style.pointerEvents = 'none';
+        spark.style.zIndex = '9999';
+        document.body.appendChild(spark);
+
+        var angle = (Math.PI * 2 / 16) * i;
+        var velocity = Math.random() * 60 + 40;
+        var vx = Math.cos(angle) * velocity;
+        var vy = Math.sin(angle) * velocity;
+
+        (function (el, vx, vy) {
+          var curLeft = x, curTop = y;
+          var opacity = 1;
+          var sparkTimer = setInterval(function () {
+            curLeft += vx * 0.1;
+            curTop += vy * 0.1 + 0.5;
+            opacity -= 0.05;
+            el.style.left = curLeft + 'px';
+            el.style.top = curTop + 'px';
+            el.style.opacity = opacity;
+            if (opacity <= 0) {
+              clearInterval(sparkTimer);
+              el.remove();
+            }
+          }, 16);
+        })(spark, vx, vy);
+      }
+    }
+
+    ripContainers.forEach(function (container) {
+      var tab = container.querySelector('.rip-tab');
+      var seal = container.querySelector('.rip-seal');
+      if (!tab || !seal) return;
+
+      var isDragging = false;
+      var startX = 0;
+      var currentDrag = 0;
+      var maxDrag = 0;
+      var isTorn = false;
+
+      function onStart(e) {
+        if (isTorn) return;
+        isDragging = true;
+        startX = (e.clientX !== undefined) ? e.clientX : (e.touches && e.touches[0].clientX);
+        maxDrag = Math.max(80, seal.offsetWidth - tab.offsetWidth - 16);
+        seal.classList.add('dragging');
+      }
+
+      function onMove(e) {
+        if (!isDragging || isTorn) return;
+        var clientX = (e.clientX !== undefined) ? e.clientX : (e.touches && e.touches[0].clientX);
+        var delta = clientX - startX;
+        currentDrag = Math.max(0, Math.min(delta, maxDrag));
+
+        tab.style.transform = 'translateX(' + currentDrag + 'px)';
+        seal.style.transform = 'scale(' + (1 + currentDrag / 900) + ') rotate(' + (currentDrag / 45) + 'deg)';
+
+        // Threshold check (> 52% of total draggable distance)
+        if (currentDrag > maxDrag * 0.52) {
+          isTorn = true;
+          isDragging = false;
+          playRipAudio();
+
+          var rect = tab.getBoundingClientRect();
+          triggerSparks(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+          container.classList.add('torn');
+
+          // Smooth navigation to destination
+          var targetSel = container.getAttribute('data-target') || '#contact';
+          setTimeout(function () {
+            var targetEl = document.querySelector(targetSel);
+            if (targetEl) {
+              if (window.lenis) {
+                window.lenis.scrollTo(targetEl, { offset: -60, duration: 1.2 });
+              } else {
+                targetEl.scrollIntoView({ behavior: 'smooth' });
+              }
+              // Focus contact input if available
+              var nameInput = targetEl.querySelector('input');
+              if (nameInput) setTimeout(function () { nameInput.focus(); }, 1200);
+            }
+          }, 550);
+        }
+      }
+
+      function onEnd() {
+        if (!isDragging || isTorn) return;
+        isDragging = false;
+        seal.classList.remove('dragging');
+        tab.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        seal.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        tab.style.transform = '';
+        seal.style.transform = '';
+        setTimeout(function () {
+          tab.style.transition = '';
+          seal.style.transition = '';
+        }, 300);
+      }
+
+      tab.addEventListener('mousedown', onStart);
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onEnd);
+
+      tab.addEventListener('touchstart', onStart, { passive: true });
+      window.addEventListener('touchmove', onMove, { passive: true });
+      window.addEventListener('touchend', onEnd, { passive: true });
+
+      // Click fallback on container
+      container.addEventListener('click', function (e) {
+        if (isTorn || isDragging) return;
+        // If clicked directly without dragging
+        if (currentDrag < 10) {
+          var targetSel = container.getAttribute('data-target') || '#contact';
+          var targetEl = document.querySelector(targetSel);
+          if (targetEl) {
+            if (window.lenis) {
+              window.lenis.scrollTo(targetEl, { offset: -60, duration: 1.2 });
+            } else {
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }
+      });
+    });
+
+    /* 2. Lava Button Dynamics */
+    var lavaBtns = document.querySelectorAll('.btn-lava');
+    lavaBtns.forEach(function (btn) {
+      btn.addEventListener('mousemove', function (e) {
+        var rect = btn.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        btn.style.setProperty('--lava-x', x + 'px');
+        btn.style.setProperty('--lava-y', y + 'px');
+      }, { passive: true });
+    });
+
+    /* 3. Laser Button Hover FX */
+    var laserBtns = document.querySelectorAll('.btn-laser');
+    laserBtns.forEach(function (btn) {
+      btn.addEventListener('mouseenter', function () {
+        var beam = btn.querySelector('.laser-beam');
+        if (beam) {
+          beam.style.transition = 'none';
+          beam.style.left = '-100%';
+          setTimeout(function () {
+            beam.style.transition = 'left 0.75s ease';
+            beam.style.left = '140%';
+          }, 10);
+        }
+      });
+    });
+  }
+
   function initMagneticButtons() {
     if (isMobile || prefersReducedMotion) return;
 
-    var selectors = '.btnP, .btnG, .btnS, .nhire, .ncv, .pb, .bot-btn, .tool-launch-btn';
+    var selectors = '.btnP, .btnG, .btnS, .nhire, .ncv, .pb, .bot-btn, .tool-launch-btn, .btn-magnetic, .btn-lava, .btn-laser';
     var buttons = document.querySelectorAll(selectors);
 
     buttons.forEach(function (btn) {
@@ -1458,6 +1736,8 @@
           /* Re-trigger card tilt for dynamically rendered cards */
           initCardTilt();
           initMagneticButtons();
+    initAvatarReveal();
+    initButtonLab();
           sectionObserver.unobserve(entry.target);
         }
       });
@@ -1844,6 +2124,8 @@
     initCardGlow();
     initCardTilt();
     initMagneticButtons();
+    initAvatarReveal();
+    initButtonLab();
     initPlayground();
     initContactForm();
     initPageTransitions();
