@@ -77,6 +77,31 @@
   ]
 }
 </script>
+
+<!-- Loader Failsafe Script -->
+<script>
+  (function() {
+    function hideLoader() {
+      var l = document.getElementById('loader');
+      if (l) {
+        l.classList.add('loaded', 'hidden');
+        l.style.opacity = '0';
+        l.style.pointerEvents = 'none';
+        setTimeout(function() { l.style.display = 'none'; }, 400);
+      }
+      document.body.classList.add('is-loaded');
+      document.body.style.overflow = '';
+    }
+    // Dismiss as soon as DOM is ready, or maximum 1.2s timeout
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() { setTimeout(hideLoader, 600); });
+    } else {
+      setTimeout(hideLoader, 400);
+    }
+    window.addEventListener('load', hideLoader);
+    setTimeout(hideLoader, 1500); // Absolute fallback timeout
+  })();
+</script>
 </head>
 <body>
 
@@ -121,192 +146,183 @@
 <!-- Mobile Sidebar Drawer -->
 <aside class="mmenu" id="mm" aria-label="Mobile Navigation Sidebar">
   <div class="mmenu-header">
-    <div class="mmenu-title">// NAVIGATION MATRIX</div>
+    <div class="mmenu-title">
+      <span class="logo-mark-sm">RH</span>
+      <span>RIFAT HASSAN</span>
+    </div>
     <button class="mmenu-close" onclick="cMM()" aria-label="Close Mobile Menu">
-      <svg class="icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
   </div>
   <nav class="mmenu-links">
-    <a href="index.html" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Home</a>
-    <a href="#about" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> About</a>
-    <a href="#skills" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Skills</a>
-    <a href="#education" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Education</a>
-    <a href="#tools" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Free Tools</a>
-    <a href="projects.html" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Projects</a>
-    <a href="playground.html" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> 3D Playground</a>
-    <a href="bots.html" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Bots</a>
-    <a href="business.html" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg> Business</a>
-    <a href="#contact" onclick="cMM()"><svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Contact</a>
+    <a href="index.html" onclick="cMM()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Home</a>
+    <a href="#about" onclick="cMM()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> About</a>
+    <a href="#skills" onclick="cMM()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Skills</a>
+    <a href="#education" onclick="cMM()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Education</a>
+    <a href="#tools" onclick="cMM()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Free Tools</a>
+    <a href="projects.html" onclick="cMM()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Projects</a>
+    <a href="bots.html" onclick="cMM()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Bots &amp; Automation</a>
+    <a href="business.html" onclick="cMM()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg> Business Ventures</a>
+    <a href="#contact" onclick="cMM()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Contact</a>
   </nav>
   <div class="mmenu-actions">
     <a href="cv.html" class="btnP" style="text-align:center;justify-content:center" onclick="cMM()">
-      <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       View Resume
     </a>
   </div>
 </aside>
 
-<!-- Main Navigation Bar -->
-<nav id="nb" role="navigation" aria-label="Main navigation">
-  <div class="nav-container">
+<!-- REBUILT CLEAN HORIZONTAL HEADER -->
+<header id="nb" class="site-header" role="banner">
+  <div class="header-inner">
+    <!-- Brand Wordmark Logo -->
     <a href="index.html" class="nlogo" aria-label="Rifat Hassan Home">
-      <span class="nlogo-icon">
-        <svg class="icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-      </span>
+      <span class="nlogo-mark">RH</span>
       <span class="nlogo-text">RIFAT <span class="nlogo-accent">HASSAN</span></span>
     </a>
-    <ul class="nlinks" role="list">
-      <li><a href="index.html" class="act">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#tools">Free Tools</a></li>
-      <li><a href="projects.html">Projects</a></li>
-      <li><a href="playground.html" class="hl" style="color:var(--cyan)">Playground</a></li>
-      <li><a href="bots.html">Bots</a></li>
-      <li><a href="business.html">Business</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+
+    <!-- Center Navigation Links -->
+    <nav class="main-nav" aria-label="Main Navigation">
+      <ul class="nlinks" role="list">
+        <li><a href="index.html" class="act">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <!-- More Dropdown -->
+        <li class="nav-drop">
+          <button class="nav-drop-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+            More <svg class="drop-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="nav-drop-menu" role="menu">
+            <a href="#education" class="drop-item" role="menuitem">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              Education
+            </a>
+            <a href="bots.html" class="drop-item" role="menuitem">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Bots &amp; Automation
+            </a>
+            <a href="business.html" class="drop-item" role="menuitem">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+              Business Ventures
+            </a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Right Header Actions -->
     <div class="nbtns">
-      <a href="cv.html" class="ncv btn-magnetic" aria-label="View Resume">
-        <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        <span>Resume</span>
+      <a href="cv.html" class="ncv" aria-label="View Resume">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Resume
       </a>
-      <a href="#contact" class="nhire btn-laser btn-magnetic" aria-label="Hire Me">
-        <span class="laser-beam"></span>
-        <span class="btn-content">
-          <span class="live-dot"></span>
-          <span>Hire Me</span>
-        </span>
+      <a href="#contact" class="nhire" aria-label="Hire Me">
+        <span class="live-dot"></span>
+        Hire Me
       </a>
+      <!-- Mobile Menu Trigger -->
+      <button class="ham" id="hm" onclick="tMM()" aria-label="Toggle mobile menu" type="button">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <!-- 3-Line Hamburger Button for Mobile -->
-    <button class="ham" id="hm" onclick="tMM()" aria-label="Toggle mobile menu" type="button">
-      <span></span><span></span><span></span>
-    </button>
   </div>
-</nav>
+</header>
 
 <!-- HERO SECTION -->
 <section id="hero" role="banner">
   <div class="ctr">
-    <div class="hi">
-      <div class="hero-content">
-        <div class="hbadge"><span class="dot"></span>Available for Projects &amp; Hiring</div>
-        <h1 class="hname">
-          <span>RIFAT HASSAN</span><br/>
-          <span class="hname-accent">OMAR FARUK</span>
+    <div class="hero-grid">
+      <!-- Left Column: Biography & Actions -->
+      <div class="hero-left">
+        <div class="hbadge">
+          <span class="live-dot"></span> Available for Projects &amp; Hiring
+        </div>
+        
+        <h1 class="hero-title">
+          <span>OMAR FARUK MIAH</span>
+          <span class="hero-aka-label">Known professionally as <strong class="hero-cyan-name">Rifat Hassan</strong></span>
         </h1>
+        
         <div class="tw-wrap">&gt; <span id="tw" class="tw"></span><span class="tw-cursor"></span></div>
+        
         <p class="hdesc">
-          Self-taught <strong>Full Stack Web Developer</strong>, <strong>AI Automation Engineer</strong>, and <strong>Telegram Bot Specialist</strong> from Bangladesh. I build modern web applications, intelligent automation systems, Telegram bots, and interactive digital experiences.
+          Self-taught <strong>Full Stack Web Developer</strong>, <strong>AI Automation Engineer</strong>, and <strong>Telegram Bot Specialist</strong> from Tongi, Gazipur, Bangladesh. I design high-performance web applications, intelligent automation systems, custom Telegram bots, and responsive digital experiences.
         </p>
 
-        <!-- EXPERIMENTAL INTERACTIVE BUTTON LAB -->
-        <div class="hctas">
-          <!-- 1. BAG TEAR / RIP BUTTON — HIRE ME -->
-          <div class="btn-rip-container" id="hero-rip-btn" data-target="#contact" role="button" tabindex="0" title="Drag tab to tear and work together">
-            <div class="rip-seal" id="rip-seal">
-              <span class="rip-stitch"></span>
-              <span class="rip-tag-label"><span class="rip-pulse"></span> START A PROJECT</span>
-              <span class="rip-sub">PULL TAB ➔</span>
-              <div class="rip-tab" id="rip-tab" role="slider" aria-label="Pull to rip seal" tabindex="0">
-                <span class="rip-arrow">➔</span>
-              </div>
-            </div>
-            <div class="rip-revealed" id="rip-revealed">
-              <span class="rip-check">✓</span>
-              <span class="rip-msg">LET'S WORK TOGETHER!</span>
-            </div>
-          </div>
-
-          <!-- 2. LAVA BUTTON — VIEW PROJECTS -->
-          <a href="projects.html" class="btn-lava btn-magnetic" aria-label="View Projects">
-            <span class="lava-glow"></span>
-            <span class="lava-blob lava-blob-1"></span>
-            <span class="lava-blob lava-blob-2"></span>
-            <span class="lava-blob lava-blob-3"></span>
-            <span class="btn-content">
-              <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              View Projects
-            </span>
+        <!-- Hero Actions -->
+        <div class="hero-actions">
+          <a href="#contact" class="btnP">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Start a Project
           </a>
-
-          <!-- 3. LASER BUTTON — EXPLORE BOTS -->
-          <a href="bots.html" class="btn-laser btn-magnetic" aria-label="Explore Bots">
-            <span class="laser-beam"></span>
-            <span class="laser-flare"></span>
-            <span class="btn-content">
-              <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              Explore Bots
-            </span>
+          <a href="projects.html" class="btnG">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            View Projects
           </a>
-
-          <!-- Secondary Button -->
-          <a href="business.html" class="btnS btn-magnetic" aria-label="Ventures">
-            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-            Ventures
+          <a href="bots.html" class="btnS">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Explore Bots
           </a>
         </div>
 
-        <!-- Social Media Links Row -->
-        <div class="socrow">
-          <a href="https://github.com/NotMrRifat" target="_blank" rel="noopener" class="sbtn btn-magnetic" aria-label="GitHub">
-            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        <!-- Social Links Row -->
+        <div class="hero-social">
+          <a href="https://github.com/NotMrRifat" target="_blank" rel="noopener" class="sbtn" aria-label="GitHub">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
             GitHub
           </a>
-          <a href="https://www.linkedin.com/in/NotMrRifat" target="_blank" rel="noopener" class="sbtn btn-magnetic" aria-label="LinkedIn">
-            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <a href="https://www.linkedin.com/in/NotMrRifat" target="_blank" rel="noopener" class="sbtn" aria-label="LinkedIn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
             LinkedIn
           </a>
-          <a href="https://www.instagram.com/NotMrRifat" target="_blank" rel="noopener" class="sbtn btn-magnetic" aria-label="Instagram">
-            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <a href="https://www.instagram.com/NotMrRifat" target="_blank" rel="noopener" class="sbtn" aria-label="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
             Instagram
+          </a>
+          <a href="https://api.whatsapp.com/send?phone=%2B8801814892163" target="_blank" rel="noopener" class="sbtn" aria-label="WhatsApp">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            WhatsApp
           </a>
         </div>
 
         <!-- Telemetry Numbers -->
         <div class="hstats">
-          <div><div class="sn" id="c1">0</div><div class="sl">Projects Built</div></div>
-          <div><div class="sn" id="c2">0+</div><div class="sl">Core Skills</div></div>
-          <div><div class="sn" id="c3">0</div><div class="sl">Ventures</div></div>
-          <div><div class="sn" id="c4">0.0</div><div class="sl">Best GPA</div></div>
+          <div class="hstat-card"><div class="sn" id="c1">0</div><div class="sl">Projects Built</div></div>
+          <div class="hstat-card"><div class="sn" id="c2">0+</div><div class="sl">Core Skills</div></div>
+          <div class="hstat-card"><div class="sn" id="c3">0</div><div class="sl">Ventures</div></div>
+          <div class="hstat-card"><div class="sn" id="c4">0.0</div><div class="sl">Best GPA</div></div>
         </div>
       </div>
 
-      <!-- SPECIAL INTERACTION: PROFILE AVATAR CIRCULAR REVEAL -->
-      <div class="hero-avatar-wrap" id="hero-avatar-wrap">
-        <div class="hero-avatar-glow"></div>
-        <div class="hero-avatar-frame" id="hero-avatar-frame" tabindex="0" role="region" aria-label="Interactive Profile Portrait">
-          <!-- Primary Photograph -->
-          <img src="me.jpg" alt="Rifat Hassan — Profile Portrait" loading="eager" class="hero-avatar-img primary-img" onerror="this.style.display='none';this.parentElement.querySelector('.fallback').style.display='flex'"/>
-          
-          <!-- Circular Cursor Following Reveal Lens with Cyber Alter-Ego -->
-          <div class="avatar-reveal-lens" id="avatar-reveal-lens" aria-hidden="true">
-            <img src="avatar-comic.svg" alt="Rifat Hassan — Cybernetic Comic Alter-Ego" class="hero-avatar-img reveal-img" />
-            <div class="lens-reticle"></div>
+      <!-- Right Column: Real Profile Photograph (Centerpiece) -->
+      <div class="hero-right">
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-glow"></div>
+          <div class="hero-photo-frame" id="hero-photo-frame">
+            <!-- Authentic Real Profile Photograph -->
+            <img src="me.jpg" alt="Rifat Hassan (Omar Faruk Miah) — Full Stack Developer" class="hero-photo-img" loading="eager" onerror="this.src='Omar.jpg'"/>
+            
+            <!-- Subtle Secondary Comic Reveal Layer on Hover -->
+            <div class="hero-photo-reveal" id="photo-reveal-layer" aria-hidden="true">
+              <img src="avatar-comic.svg" alt="Rifat Hassan — Creative Alter-Ego" class="reveal-img-cover" />
+            </div>
           </div>
 
-          <div class="fallback">RH</div>
-        </div>
-
-        <!-- Touch & Mobile Reveal Toggle Pill -->
-        <div class="avatar-reveal-hint" id="avatar-reveal-hint" role="button" tabindex="0" title="Click or tap to toggle cyber alter-ego">
-          <span class="live-dot"></span>
-          <span class="hint-text">Hover or tap portrait to reveal Cyber Alter-Ego</span>
-        </div>
-
-        <!-- Floating Cyber Telemetry Badges -->
-        <div class="hero-tag hero-tag-1">
-          <span class="live-dot"></span> Full Stack &amp; AI
-        </div>
-        <div class="hero-tag hero-tag-2">
-          <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-          Vibe Coder
-        </div>
-        <div class="hero-tag hero-tag-3">
-          <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Bot Specialist
+          <!-- Refined Floating Telemetry Badges -->
+          <div class="hero-tag hero-tag-1">
+            <span class="live-dot"></span> Full Stack Developer
+          </div>
+          <div class="hero-tag hero-tag-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            AI Automation
+          </div>
+          <div class="hero-tag hero-tag-3">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Telegram Bot Specialist
+          </div>
         </div>
       </div>
     </div>
@@ -513,76 +529,6 @@
   <div class="sec-divider" aria-hidden="true"><span class="sec-divider-node"></span></div>
 </section>
 
-<!-- THE DIGITAL PLAYGROUND (GAMING-INSPIRED 3D EXPERIENCE) -->
-<section id="playground" class="playground-section" aria-label="The Digital Playground">
-  <div class="ctr">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;flex-wrap:wrap;gap:16px">
-      <div>
-        <div class="stag">
-          <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-          07 / 3D Virtual Dimension
-        </div>
-        <h2 class="stitle" style="margin-bottom:0">THE DIGITAL <span>PLAYGROUND</span></h2>
-        <p style="color:var(--txtd);font-family:var(--fmono);font-size:13px">// Interactive cyber dimension: test nodes, manipulate energy cores, and explore capabilities in 3D</p>
-      </div>
-      <div>
-        <a href="playground.html" class="btnP" style="font-size:12px;padding:10px 20px">
-          <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Launch Full Dimension
-        </a>
-      </div>
-    </div>
-
-    <!-- Playground Gaming Container -->
-    <div class="playground-card glass-card">
-      <div class="playground-hud">
-        <div class="hud-item"><span class="hud-dot live"></span> SYSTEM: ONLINE</div>
-        <div class="hud-item"><span class="hud-lbl">CORE:</span> OMAR-MATRIX v5.0</div>
-        <div class="hud-item"><span class="hud-lbl">ACTIVE NODE:</span> <span id="hud-active-node" style="color:var(--cyan)">AI NEURAL CORE</span></div>
-        <div class="hud-item hud-coords"><span class="hud-lbl">ROTATION:</span> <span id="hud-coords">X: 0.00 Y: 0.00</span></div>
-      </div>
-
-      <div class="playground-canvas-wrap">
-        <canvas id="playground-canvas"></canvas>
-        <div class="playground-controls-overlay">
-          <div class="playground-nodes-bar">
-            <button class="pg-node-btn active" data-node="ai">
-              <span class="pg-btn-icon">⚡</span> AI Automation
-            </button>
-            <button class="pg-node-btn" data-node="web3d">
-              <span class="pg-btn-icon">💎</span> 3D WebGL
-            </button>
-            <button class="pg-node-btn" data-node="bots">
-              <span class="pg-btn-icon">🤖</span> Telegram Bots
-            </button>
-            <button class="pg-node-btn" data-node="fullstack">
-              <span class="pg-btn-icon">🌐</span> Full Stack
-            </button>
-            <button class="pg-node-btn warp" data-node="warp">
-              <span class="pg-btn-icon">🚀</span> Hyper Warp
-            </button>
-          </div>
-          <div class="playground-hint">
-            <span>🖱️ Drag to rotate 3D cyber core &bull; Click nodes to switch matrix capabilities</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="playground-info-panel" id="pg-info-panel">
-        <div class="pg-info-title" id="pg-info-title">NEURAL AI AUTOMATION NODE</div>
-        <div class="pg-info-desc" id="pg-info-desc">Custom LLM prompt pipelines, autonomous agent workflows, OpenAI GPT-4 function calling, and zero-latency webhook automation engineered by Omar Faruk Miah.</div>
-        <div class="pg-info-tags" id="pg-info-tags">
-          <span>GPT-4 API</span>
-          <span>n8n Pipelines</span>
-          <span>Autonomous Agents</span>
-          <span>JSON Function Calling</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="sec-divider" aria-hidden="true"><span class="sec-divider-node"></span></div>
-</section>
-
 <!-- BUSINESS & VENTURES SECTION -->
 <section id="business" aria-label="Business Ventures">
   <div class="ctr">
@@ -718,42 +664,26 @@
 </section>
 
 <!-- CLIENT CONVERSION BANNER -->
-<section style="padding:clamp(40px, 6vw, 70px) 0" aria-label="Call to Action">
+<section style="padding:clamp(40px, 6vw, 64px) 0" aria-label="Call to Action">
   <div class="ctr">
-    <div class="client-banner glass-card" style="padding: clamp(32px, 5vw, 56px); text-align: center; border-radius: 24px; position: relative; overflow: hidden; background: radial-gradient(circle at 50% 20%, rgba(0, 229, 255, 0.08) 0%, rgba(8, 12, 24, 0.85) 100%); border: 1px solid rgba(0, 229, 255, 0.25); box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);">
-      <div style="display:inline-flex;align-items:center;gap:8px;font-family:var(--ff-mono);font-size:0.75rem;color:var(--c-cyan);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:14px">
-        <span class="live-dot"></span> NEXT STEP
+    <div class="client-banner glass-card" style="padding:clamp(32px, 5vw, 50px);text-align:center;border-radius:20px;background:radial-gradient(circle at 50% 20%, rgba(52,120,255,0.08) 0%, rgba(9,13,24,0.9) 100%);border:1px solid rgba(255,255,255,0.1);box-shadow:0 15px 45px rgba(0,0,0,0.6)">
+      <div style="display:inline-flex;align-items:center;gap:8px;font-family:var(--ff-mono);font-size:0.75rem;color:var(--c-cyan);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px">
+        <span class="live-dot"></span> AVAILABLE FOR CONTRACTS
       </div>
-      <h3 style="font-family:var(--ff-display);font-size:clamp(1.5rem, 3.5vw, 2.4rem);font-weight:900;letter-spacing:-0.01em;margin-bottom:14px;color:var(--c-white)">
-        READY TO ELEVATE YOUR <span style="color:var(--c-cyan)">DIGITAL PRESENCE?</span>
+      <h3 style="font-family:var(--ff);font-size:clamp(1.5rem, 3.2vw, 2.2rem);font-weight:900;margin-bottom:12px;color:var(--c-white)">
+        READY TO BUILD YOUR NEXT <span style="color:var(--c-cyan)">DIGITAL PRODUCT?</span>
       </h3>
-      <p style="font-size:clamp(0.95rem, 1.2vw, 1.05rem);color:rgba(245,247,255,0.65);max-width:640px;margin:0 auto 28px;line-height:1.7">
-        Whether you need a custom high-performance web application, a Telegram bot, or an automated AI workflow — let's build something exceptional together.
+      <p style="font-size:clamp(0.92rem, 1.1vw, 1.02rem);color:rgba(245,247,255,0.65);max-width:620px;margin:0 auto 24px;line-height:1.7">
+        Whether you need a high-performance web application, a custom Telegram bot, or an automated AI workflow — let's build something exceptional together.
       </p>
-      <div class="client-banner-btns" style="display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap">
-        <div class="btn-rip-container" id="banner-rip-btn" data-target="#contact" role="button" tabindex="0">
-          <div class="rip-seal">
-            <span class="rip-stitch"></span>
-            <span class="rip-tag-label"><span class="rip-pulse"></span> START A PROJECT</span>
-            <span class="rip-sub">PULL TAB ➔</span>
-            <div class="rip-tab" role="slider" aria-label="Pull to rip seal" tabindex="0">
-              <span class="rip-arrow">➔</span>
-            </div>
-          </div>
-          <div class="rip-revealed">
-            <span class="rip-check">✓</span>
-            <span class="rip-msg">LET'S BUILD SOMETHING GREAT!</span>
-          </div>
-        </div>
-        <a href="https://api.whatsapp.com/send?phone=%2B8801814892163" target="_blank" rel="noopener" class="btn-lava btn-magnetic" aria-label="WhatsApp Consultation">
-          <span class="lava-glow"></span>
-          <span class="lava-blob lava-blob-1"></span>
-          <span class="lava-blob lava-blob-2"></span>
-          <span class="lava-blob lava-blob-3"></span>
-          <span class="btn-content">
-            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            WhatsApp Consultation
-          </span>
+      <div style="display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap">
+        <a href="#contact" class="btnP">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Start a Project
+        </a>
+        <a href="https://api.whatsapp.com/send?phone=%2B8801814892163" target="_blank" rel="noopener" class="btnG">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          WhatsApp Consultation
         </a>
       </div>
     </div>
@@ -761,97 +691,117 @@
 </section>
 
 <!-- CONTACT SECTION -->
-<section id="contact" aria-label="Contact Omar Faruk Miah">
+<section id="contact" aria-label="Contact Rifat Hassan">
   <div class="ctr">
     <div class="stag">
-      <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       10 / Get In Touch
     </div>
     <h2 class="stitle">LET'S BUILD <span>SOMETHING GREAT</span></h2>
 
-    <div class="cogrid">
-      <div>
-        <div class="clist">
-          <a href="mailto:md.rifat@myself.com" class="crow">
-            <div class="cico">
-              <svg class="icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    <div class="contact-grid">
+      <!-- Left Column: Direct Communication Channels -->
+      <div class="contact-info-col">
+        <p style="color:var(--txtd);line-height:1.7;margin-bottom:24px;font-size:0.98rem">
+          Have an idea for a high-performance web application, custom Telegram bot, or intelligent AI automation pipeline? Get in touch directly — I typically respond within a few hours.
+        </p>
+
+        <div class="contact-cards-list">
+          <!-- Email Card -->
+          <a href="mailto:md.rifat@myself.com" class="contact-card">
+            <div class="contact-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </div>
-            <div><div class="clbl">Email</div><div class="cval">md.rifat@myself.com</div></div>
-          </a>
-          <a href="https://api.whatsapp.com/send?phone=%2B8801814892163" target="_blank" rel="noopener" class="crow">
-            <div class="cico">
-              <svg class="icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <div class="contact-text-box">
+              <span class="contact-label">EMAIL ADDRESS</span>
+              <span class="contact-value">md.rifat@myself.com</span>
             </div>
-            <div><div class="clbl">WhatsApp</div><div class="cval">+880 1814-892163</div></div>
-          </a>
-          <a href="https://t.me/NotMrRifat" target="_blank" rel="noopener" class="crow">
-            <div class="cico">
-              <svg class="icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <div class="contact-arrow-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
             </div>
-            <div><div class="clbl">Telegram</div><div class="cval">@NotMrRifat</div></div>
           </a>
-          <a href="#" class="crow">
-            <div class="cico">
-              <svg class="icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+
+          <!-- WhatsApp Card -->
+          <a href="https://api.whatsapp.com/send?phone=%2B8801814892163" target="_blank" rel="noopener" class="contact-card">
+            <div class="contact-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             </div>
-            <div><div class="clbl">Location</div><div class="cval">Tongi, Gazipur-1712, Bangladesh</div></div>
+            <div class="contact-text-box">
+              <span class="contact-label">WHATSAPP DIRECT</span>
+              <span class="contact-value">+880 1814-892163</span>
+            </div>
+            <div class="contact-arrow-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
           </a>
+
+          <!-- Telegram Card -->
+          <a href="https://t.me/NotMrRifat" target="_blank" rel="noopener" class="contact-card">
+            <div class="contact-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </div>
+            <div class="contact-text-box">
+              <span class="contact-label">TELEGRAM HANDLE</span>
+              <span class="contact-value">@NotMrRifat</span>
+            </div>
+            <div class="contact-arrow-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </a>
+
+          <!-- Location Card -->
+          <div class="contact-card" style="cursor:default">
+            <div class="contact-icon-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="contact-text-box">
+              <span class="contact-label">LOCATION</span>
+              <span class="contact-value">Tongi, Gazipur-1712, Bangladesh</span>
+            </div>
+          </div>
         </div>
-        <button class="copy-email-btn" onclick="copyEmail(this)">
-          <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+
+        <button class="copy-email-btn" onclick="copyEmail(this)" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
           Copy Email Address
         </button>
 
-        <!-- Social Media Buttons -->
-        <div class="socl" style="margin-top:20px">
-          <a href="https://github.com/NotMrRifat" target="_blank" rel="noopener" class="soli">
-            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            GitHub
-          </a>
-          <a href="https://www.linkedin.com/in/NotMrRifat" target="_blank" rel="noopener" class="soli">
-            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            LinkedIn
-          </a>
-          <a href="https://www.facebook.com/NotMrRifat" target="_blank" rel="noopener" class="soli">
-            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            Facebook
-          </a>
-          <a href="https://www.instagram.com/NotMrRifat" target="_blank" rel="noopener" class="soli">
-            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            Instagram
-          </a>
-          <a href="https://www.youtube.com/@NonTechRifat" class="soli">
-            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            YouTube
-          </a>
-          <a href="cv.html" class="soli" style="color:var(--cyan);border-color:rgba(0,245,255,.3)">
-            <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            View Resume
-          </a>
+        <!-- Social Media Profiles -->
+        <div class="socl" style="margin-top:24px">
+          <a href="https://github.com/NotMrRifat" target="_blank" rel="noopener" class="soli">GitHub</a>
+          <a href="https://www.linkedin.com/in/NotMrRifat" target="_blank" rel="noopener" class="soli">LinkedIn</a>
+          <a href="https://www.facebook.com/NotMrRifat" target="_blank" rel="noopener" class="soli">Facebook</a>
+          <a href="https://www.instagram.com/NotMrRifat" target="_blank" rel="noopener" class="soli">Instagram</a>
+          <a href="https://www.youtube.com/@NonTechRifat" target="_blank" rel="noopener" class="soli">YouTube</a>
+          <a href="cv.html" class="soli" style="color:var(--cyan);border-color:rgba(0,245,255,.3)">View Resume</a>
         </div>
       </div>
 
-      <div class="fcard glass-card">
-        <div class="fgrp">
-          <label class="flbl" for="fn">Your Name</label>
-          <input class="finp" type="text" id="fn" placeholder="Name" autocomplete="name"/>
+      <!-- Right Column: Interactive Contact Form -->
+      <div class="contact-form-col">
+        <div class="fcard glass-card">
+          <h3 style="font-family:var(--ff);font-size:1.15rem;margin-bottom:18px;color:var(--c-white)">SEND A DIRECT MESSAGE</h3>
+          <div class="fgrp">
+            <label class="flbl" for="fn">Your Name</label>
+            <input class="finp" type="text" id="fn" placeholder="Your name" autocomplete="name"/>
+          </div>
+          <div class="fgrp">
+            <label class="flbl" for="fe">Your Email</label>
+            <input class="finp" type="email" id="fe" placeholder="email@example.com" autocomplete="email"/>
+          </div>
+          <div class="fgrp">
+            <label class="flbl" for="fs">Subject / Service Needed</label>
+            <input class="finp" type="text" id="fs" placeholder="Web Development / AI Automation / Bot"/>
+          </div>
+          <div class="fgrp">
+            <label class="flbl" for="fm">Project Brief / Message</label>
+            <textarea class="farea" id="fm" placeholder="Describe your project, goals, or timeline..."></textarea>
+          </div>
+          <button class="fsub btnP" onclick="sendMsg()" type="button" style="width:100%;justify-content:center">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send Message
+          </button>
         </div>
-        <div class="fgrp">
-          <label class="flbl" for="fe">Your Email</label>
-          <input class="finp" type="email" id="fe" placeholder="email@example.com" autocomplete="email"/>
-        </div>
-        <div class="fgrp">
-          <label class="flbl" for="fs">Subject / Service Needed</label>
-          <input class="finp" type="text" id="fs" placeholder="Web Development / AI Automation / Bot"/>
-        </div>
-        <div class="fgrp">
-          <label class="flbl" for="fm">Message</label>
-          <textarea class="farea" id="fm" placeholder="Tell me about your project goals..."></textarea>
-        </div>
-        <button class="fsub" onclick="sendMsg()">
-          <svg class="icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          Send Message
-        </button>
       </div>
     </div>
   </div>

@@ -77,10 +77,23 @@
       'Welcome to the universe...',
     ];
 
+    function dismissLoader() {
+      if (!loader) return;
+      loader.classList.add('hidden', 'loaded');
+      loader.style.opacity = '0';
+      loader.style.pointerEvents = 'none';
+      setTimeout(function () {
+        loader.style.display = 'none';
+      }, 300);
+      document.body.classList.add('is-loaded');
+      document.body.style.overflow = '';
+      triggerHeroAnimation();
+    }
+
     var progress = 0;
     var msgIdx = 0;
     var interval = setInterval(function () {
-      progress += Math.random() * 25 + 10;
+      progress += Math.random() * 30 + 15;
       if (progress > 100) progress = 100;
 
       if (bar) bar.style.width = progress + '%';
@@ -94,13 +107,15 @@
 
       if (progress >= 100) {
         clearInterval(interval);
-        setTimeout(function () {
-          loader.classList.add('hidden');
-          document.body.style.overflow = '';
-          triggerHeroAnimation();
-        }, 280);
+        setTimeout(dismissLoader, 200);
       }
-    }, 35);
+    }, 30);
+
+    // Guaranteed fallback timeout: loader will NEVER hang
+    setTimeout(function() {
+      clearInterval(interval);
+      dismissLoader();
+    }, 1200);
 
     document.body.style.overflow = 'hidden';
   }
@@ -1120,21 +1135,30 @@
       }
     });
 
+    var badges = {
+      code: 'Core Stack',
+      web: 'Creative UI',
+      ai: 'Automation',
+      tools: 'Infrastructure'
+    };
+
     var html = '';
     Object.keys(categories).forEach(function (catKey) {
       var cat = categories[catKey];
       if (cat.items.length > 0) {
         html += '<div class="scat glass-card" data-cat="' + catKey + '">' +
-          '<div class="ctit">' + cat.name + '</div>' +
-          '<div class="sklist">' +
+          '<div class="ctit" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">' +
+            '<span>' + cat.name + '</span>' +
+            '<span class="badge" style="font-size:0.7rem;padding:3px 9px;border-radius:9999px;background:rgba(0,229,255,0.08);color:var(--c-cyan);border:1px solid rgba(0,229,255,0.2);letter-spacing:0.04em">' + (badges[catKey] || 'Specialized') + '</span>' +
+          '</div>' +
+          '<div class="sklist" style="display:flex;flex-direction:column;gap:12px">' +
           cat.items.map(function (s) {
-            return '<div>' +
-              '<div class="smeta">' +
-                '<span class="sname">' + s.icon + ' ' + s.name + '</span>' +
-                '<span class="spct">' + s.pct + '%</span>' +
+            return '<div class="skill-item" style="padding:10px 12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:8px;transition:all 0.2s ease">' +
+              '<div class="smeta" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">' +
+                '<span class="sname" style="font-weight:600;font-size:0.88rem;color:#fff;display:inline-flex;align-items:center;gap:8px">' + s.icon + ' ' + s.name + '</span>' +
+                '<span style="font-family:var(--ff-mono);font-size:0.68rem;color:var(--c-cyan);background:rgba(0,229,255,0.06);padding:2px 7px;border-radius:4px;border:1px solid rgba(0,229,255,0.15)">Verified</span>' +
               '</div>' +
-              '<div class="sbg"><div class="sbar" data-w="' + s.pct + '"></div></div>' +
-              '<div style="font-size:11px;color:var(--txtd);margin-top:4px">' + s.desc + '</div>' +
+              '<div style="font-size:12px;color:rgba(245,247,255,0.65);line-height:1.45">' + s.desc + '</div>' +
             '</div>';
           }).join('') +
           '</div></div>';
@@ -1142,10 +1166,6 @@
     });
 
     container.innerHTML = html;
-
-    setTimeout(function () {
-      document.querySelectorAll('.sbar').forEach(function (b) { b.style.width = b.dataset.w + '%'; });
-    }, 100);
   }
 
   /* 2. Render Free AI & Developer Tools with Custom-Built Utilities */
@@ -1355,6 +1375,23 @@
 
     var sections = document.querySelectorAll('section[id]');
     var navLinks = document.querySelectorAll('.nlinks a');
+
+    /* Dropdown Toggle Handling for Touch & Click */
+    var dropTrigger = document.querySelector('.nav-drop-trigger, .nav-dropdown-btn');
+    var dropMenu = document.querySelector('.nav-drop, .nav-dropdown');
+    if (dropTrigger && dropMenu) {
+      dropTrigger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = dropMenu.classList.toggle('active');
+        dropTrigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+      document.addEventListener('click', function (e) {
+        if (!dropMenu.contains(e.target)) {
+          dropMenu.classList.remove('active');
+          dropTrigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
 
     window.addEventListener('scroll', function () {
       var sy = window.scrollY;
@@ -2126,7 +2163,7 @@
     initMagneticButtons();
     initAvatarReveal();
     initButtonLab();
-    initPlayground();
+    // initPlayground removed from homepage
     initContactForm();
     initPageTransitions();
     initLazyObservers();
