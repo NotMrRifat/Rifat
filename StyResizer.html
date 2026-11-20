@@ -95,6 +95,14 @@ input[type=range]{flex:1;accent-color:var(--maroon);height:28px;min-width:0}
 .du-bg-notice{display:flex;align-items:flex-start;gap:6px;font-size:12px;color:var(--maroon);background:#fff1f1;border:1px dashed rgba(99,13,22,.35);padding:7px 10px;border-radius:8px;line-height:1.4}
 .du-bg-notice svg{flex-shrink:0;margin-top:2px}
 
+/* RU card */
+.ru-card{background:linear-gradient(135deg,rgba(11,83,105,.06),rgba(11,83,105,.02));border:1.5px solid #0b5369;border-radius:12px;padding:12px 14px;margin-bottom:14px;display:flex;flex-direction:column;gap:8px}
+.ru-btn{appearance:none;border:1px solid #0b5369;background:#0b5369;color:#fff;font:700 13px/1 'Inter',sans-serif;padding:8px 14px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.18s;box-shadow:0 2px 8px rgba(11,83,105,.2)}
+.ru-btn:hover{background:#083d4d;transform:translateY(-1px);box-shadow:0 4px 12px rgba(11,83,105,.3)}
+.ru-spec{background:#f0f8fa;border:1px solid rgba(11,83,105,.2);padding:2px 8px;border-radius:999px;font-weight:600;color:#0b5369}
+.ru-bg-notice{display:flex;align-items:flex-start;gap:6px;font-size:12px;color:#0b5369;background:#f0f9fa;border:1px dashed rgba(11,83,105,.35);padding:7px 10px;border-radius:8px;line-height:1.4}
+.ru-bg-notice svg{flex-shrink:0;margin-top:2px}
+
 /* Background Changer Tool (Non-AI) */
 .bg-changer{background:var(--white);border:1px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.03)}
 .bg-changer-toggle{width:100%;background:var(--cream2);border:0;border-bottom:1px solid transparent;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font:600 13.5px 'Inter',sans-serif;color:var(--ink);transition:.15s}
@@ -223,6 +231,7 @@ main{flex:1;padding-bottom:40px}
       <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;align-items:center">
         <button class="btn primary" id="pick" type="button">Choose photo</button>
         <button class="btn" id="duPrePickBtn" type="button" title="Pre-configure Dhaka University Format">🎓 Dhaka University Format</button>
+        <button class="btn" id="ruPrePickBtn" type="button" title="Pre-configure Rajshahi University Format">🏛️ Rajshahi University Format</button>
       </div>
       <input type="file" id="file" accept="image/*" multiple hidden>
     </div>
@@ -279,22 +288,44 @@ main{flex:1;padding-bottom:40px}
       <div class="panel">
         <h3>Output settings</h3>
 
-        <!-- DU Admission Quick Preset Card -->
-        <div class="du-card" id="duPresetCard">
-          <div class="du-card-top">
-            <button type="button" class="du-btn" id="duPresetBtn">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-              Dhaka University Format
-            </button>
-            <div class="du-specs">
-              <span class="du-spec">Min 450×550 px</span>
-              <span class="du-spec">Min 20 KB</span>
-              <span class="du-spec">JPG</span>
+        <!-- University Admission Presets -->
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+          <!-- DU Admission Quick Preset Card -->
+          <div class="du-card" id="duPresetCard" style="margin-bottom:0">
+            <div class="du-card-top">
+              <button type="button" class="du-btn" id="duPresetBtn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                Dhaka University Format
+              </button>
+              <div class="du-specs">
+                <span class="du-spec">Min 450×550 px</span>
+                <span class="du-spec">Min 20 KB</span>
+                <span class="du-spec">JPG</span>
+              </div>
+            </div>
+            <div class="du-bg-notice" id="duBgNotice">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span><strong>DU Rule:</strong> Photo must have a plain white background (pure white #FFFFFF background is filled automatically).</span>
             </div>
           </div>
-          <div class="du-bg-notice" id="duBgNotice">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span><strong>DU Rule:</strong> Photo must have a plain white background (pure white #FFFFFF background is filled automatically).</span>
+
+          <!-- RU Admission Quick Preset Card -->
+          <div class="ru-card" id="ruPresetCard" style="margin-bottom:0">
+            <div class="du-card-top">
+              <button type="button" class="ru-btn" id="ruPresetBtn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                Rajshahi University Format
+              </button>
+              <div class="du-specs">
+                <span class="ru-spec">300×400 px</span>
+                <span class="ru-spec">Max 100 KB</span>
+                <span class="ru-spec">JPG</span>
+              </div>
+            </div>
+            <div class="ru-bg-notice" id="ruBgNotice">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span><strong>RU Rule:</strong> Photo must be 300×400 px, plain white background, max file size 100 KB.</span>
+            </div>
           </div>
         </div>
 
@@ -393,7 +424,7 @@ main{flex:1;padding-bottom:40px}
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 const el={};
-['file','drop','pick','work','cv','w','h','unit','dpi','fmt','q','qv','qrow','maxkb','kbnote','zoom','zrow','zv','hint','info','warn','dl','swap','rotL','rotR','reset','change','presets','libGrid','libEmpty','libStore','libCount','libClear','toast','pop','popX','year','duPresetBtn','duPrePickBtn','duPresetCard','bgToggle','bgChangerBox','bgBody','bgTol','bgTolVal','bgApplyBtn','bgResetBtn','bgCustomColor','bgStatus'].forEach(id=>el[id]=document.getElementById(id));
+['file','drop','pick','work','cv','w','h','unit','dpi','fmt','q','qv','qrow','maxkb','kbnote','zoom','zrow','zv','hint','info','warn','dl','swap','rotL','rotR','reset','change','presets','libGrid','libEmpty','libStore','libCount','libClear','toast','pop','popX','year','duPresetBtn','duPrePickBtn','duPresetCard','ruPresetBtn','ruPrePickBtn','ruPresetCard','bgToggle','bgChangerBox','bgBody','bgTol','bgTolVal','bgApplyBtn','bgResetBtn','bgCustomColor','bgStatus'].forEach(id=>el[id]=document.getElementById(id));
 el.year.textContent=new Date().getFullYear();
 
 /* ---------- helpers ---------- */
@@ -451,6 +482,7 @@ async function saveRecord(kind,name,blob,bmp){
 /* ---------- image state ---------- */
 const S={bmp:null,orig:null,cleanBmp:null,iw:0,ih:0,ow:0,oh:0,base:'photo',mode:'crop',zoom:1,panX:0,panY:0,first:true,id:null};
 let isDUActive=false;
+let isRUActive=false;
 const cache=new Map();
 let lastUnit='px';
 
@@ -651,9 +683,21 @@ function setSource(bmp,name,id){
   S.zoom=1;S.panX=S.panY=0;cache.clear();
   if(S.first){
     S.first=false;
-    el.unit.value='px';lastUnit='px';
-    el.w.value=Math.min(bmp.width,4000);
-    el.h.value=Math.round(Math.min(bmp.width,4000)*bmp.height/bmp.width);
+    if(isDUActive){
+      el.unit.value='px';lastUnit='px';
+      el.w.value=450;el.h.value=550;
+      el.fmt.value='jpeg';syncFmt();
+      el.maxkb.value='';
+    }else if(isRUActive){
+      el.unit.value='px';lastUnit='px';
+      el.w.value=300;el.h.value=400;
+      el.fmt.value='jpeg';syncFmt();
+      el.maxkb.value=100;
+    }else{
+      el.unit.value='px';lastUnit='px';
+      el.w.value=Math.min(bmp.width,4000);
+      el.h.value=Math.round(Math.min(bmp.width,4000)*bmp.height/bmp.width);
+    }
   }
   el.drop.hidden=true;el.work.hidden=false;
   syncZoomUI();refresh();
@@ -690,6 +734,8 @@ window.addEventListener('paste',e=>{
 /* ---------- controls ---------- */
 const PRESETS=[
   {n:'Photo 300×300',u:'px',w:300,h:300,kb:100},
+  {n:'RU 300×400',u:'px',w:300,h:400,kb:100},
+  {n:'DU 450×550',u:'px',w:450,h:550,kb:0},
   {n:'Photo 200×230',u:'px',w:200,h:230,kb:50},
   {n:'Signature 300×80',u:'px',w:300,h:80,kb:50},
   {n:'Passport 35×45 mm',u:'mm',w:35,h:45,kb:0},
@@ -700,6 +746,8 @@ const PRESETS=[
 PRESETS.forEach(p=>{
   const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=p.n;
   b.onclick=()=>{
+    isDUActive=(p.n.startsWith('DU'));
+    isRUActive=(p.n.startsWith('RU'));
     el.unit.value=p.u;lastUnit=p.u;el.w.value=p.w;el.h.value=p.h;el.maxkb.value=p.kb||'';el.dpi.value='300';
     el.fmt.value='jpeg';syncFmt();setMode('crop',true);
   };
@@ -731,7 +779,7 @@ el.fmt.onchange=()=>{syncFmt();refresh();};
 el.q.oninput=()=>{el.qv.textContent=el.q.value+'%';invalidate();};
 el.maxkb.oninput=invalidate;
 el.dpi.onchange=refresh;
-el.w.oninput=el.h.oninput=refresh;
+el.w.oninput=el.h.oninput=()=>{isDUActive=false;isRUActive=false;refresh();};
 el.unit.onchange=()=>{
   const dpi=+el.dpi.value||300;
   const f={px:null,cm:2.54,mm:25.4,in:1};
@@ -758,6 +806,7 @@ el.reset.onclick=()=>{S.bmp=S.cleanBmp=S.orig;S.iw=S.ow;S.ih=S.oh;cache.clear();
 /* ---------- Dhaka University Format Preset ---------- */
 function applyDUPreset(silent){
   isDUActive=true;
+  isRUActive=false;
   el.unit.value='px';lastUnit='px';
   el.w.value=450;
   el.h.value=550;
@@ -779,6 +828,34 @@ if(el.duPresetBtn)el.duPresetBtn.onclick=()=>applyDUPreset(false);
 if(el.duPrePickBtn)el.duPrePickBtn.onclick=()=>{
   applyDUPreset(true);
   toast('Dhaka University preset set. Please choose your photo!');
+  el.file.click();
+};
+
+/* ---------- Rajshahi University Format Preset ---------- */
+function applyRUPreset(silent){
+  isDUActive=false;
+  isRUActive=true;
+  el.unit.value='px';lastUnit='px';
+  el.w.value=300;
+  el.h.value=400;
+  el.fmt.value='jpeg';
+  syncFmt();
+  el.q.value=92;
+  el.qv.textContent='92%';
+  el.maxkb.value=100;
+  setMode('crop',true);
+
+  if(!S.bmp){
+    toast('Please upload an image first!');
+    return;
+  }
+  refresh();
+  if(!silent)toast('Rajshahi University format applied (300×400 px, Max 100 KB, JPG, White BG)');
+}
+if(el.ruPresetBtn)el.ruPresetBtn.onclick=()=>applyRUPreset(false);
+if(el.ruPrePickBtn)el.ruPrePickBtn.onclick=()=>{
+  applyRUPreset(true);
+  toast('Rajshahi University preset set. Please choose your photo!');
   el.file.click();
 };
 
