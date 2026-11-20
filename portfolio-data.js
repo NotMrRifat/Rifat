@@ -1,5 +1,5 @@
 /* ============================================================
-   OMAR FARUK MIAH PORTFOLIO — RICH DATA MODULE v4.5
+   RIFAT HASSAN PORTFOLIO — RICH DATA MODULE v4.5
    100% Comprehensive Content for Skills, Tools, Projects, Bots, Businesses
    ============================================================ */
 
@@ -46,7 +46,7 @@ Object.assign(PORTFOLIO_DATA, {
       isCustom: true,
       status: "live",
       statusLabel: "● Live Utility",
-      badgeText: "Built by Omar Faruk",
+      badgeText: "Built by Rifat",
       icon: `<svg class="icon-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`,
       description: "100% private in-browser photo tool to crop, resize to exact pixels/cm/inches, compress to a target KB, and export at 300 DPI for passports and applications.",
       techStack: ["Canvas API", "300 DPI Engine", "Client-Side", "Privacy-First"],
@@ -61,7 +61,7 @@ Object.assign(PORTFOLIO_DATA, {
       isCustom: true,
       status: "live",
       statusLabel: "● Live Utility",
-      badgeText: "Built by Omar Faruk",
+      badgeText: "Built by Rifat",
       icon: `<svg class="icon-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
       description: "High-precision live countdown timer and multi-interval study focus clock featuring audio alerts, Arabic calligraphy motifs, and glassmorphic telemetry.",
       techStack: ["Tailwind CSS", "Web Audio API", "Local Storage", "Vanilla JS"],
@@ -76,7 +76,7 @@ Object.assign(PORTFOLIO_DATA, {
       isCustom: true,
       status: "live",
       statusLabel: "● Live Utility",
-      badgeText: "Built by Omar Faruk",
+      badgeText: "Built by Rifat",
       icon: `<svg class="icon-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
       description: "Comprehensive master life routine and academic preparation syllabus hub. Features structured time blocks, prayer schedules, syllabus checklists, and print view.",
       techStack: ["Interactive Table", "Tailwind CSS", "Print Engine", "Bilingual"],
@@ -390,7 +390,7 @@ Object.assign(PORTFOLIO_DATA, {
       statusClass: "new",
       isElite: true,
       icon: `<svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
-      overview: "Elite ProGen is Omar Faruk Miah's flagship agency providing custom AI solutions, high-converting web experiences, automated Telegram bots, and n8n workflows.",
+      overview: "Elite ProGen is Rifat Hassan's primary agency providing custom AI solutions, high-converting web experiences, automated Telegram bots, and n8n workflows.",
       mission: "To bridge modern artificial intelligence with exceptional web design to elevate client conversion and operational efficiency.",
       vision: "To build world-class digital products and automation tools that scale business productivity globally.",
       stats: [
